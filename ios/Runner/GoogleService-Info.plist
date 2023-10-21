@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>209326240548-f2fct0dp4elnpka1pev11jg3vuhutbqv.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.209326240548-f2fct0dp4elnpka1pev11jg3vuhutbqv</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>209326240548-35d948jlgnmeusoo2djs7lgjdgr5pjf8.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC221KFCb4YjZYBfSEN1O_0g5HK6mn1tcs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>209326240548</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mikenimer.puppyfinder</string>
+	<key>PROJECT_ID</key>
+	<string>rescue-pets-308102</string>
+	<key>STORAGE_BUCKET</key>
+	<string>rescue-pets-308102.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:209326240548:ios:f71e565c9e1095a1b979b1</string>
+</dict>
+</plist>

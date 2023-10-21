@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "209326240548",
+    "project_id": "rescue-pets-308102",
+    "storage_bucket": "rescue-pets-308102.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209326240548:android:6316cbf2c5968d6ab979b1",
+        "android_client_info": {
+          "package_name": "com.flutterflow.pets"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "209326240548-rvh5q1aghsofq51hdh1u0vsg02a6s5gb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.flutterflow.pets",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "209326240548-32oievmbu4o3etsgeog5mf7fpk028uvf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaGDagBpW-80UVKDJ2rBRxPMNR39kXRXg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "209326240548-32oievmbu4o3etsgeog5mf7fpk028uvf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "209326240548-f2fct0dp4elnpka1pev11jg3vuhutbqv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mikenimer.puppyfinder"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209326240548:android:a743e053058de1e0b979b1",
+        "android_client_info": {
+          "package_name": "com.mikenimer.puppyfinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "209326240548-35d948jlgnmeusoo2djs7lgjdgr5pjf8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mikenimer.puppyfinder",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "209326240548-32oievmbu4o3etsgeog5mf7fpk028uvf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaGDagBpW-80UVKDJ2rBRxPMNR39kXRXg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "209326240548-32oievmbu4o3etsgeog5mf7fpk028uvf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "209326240548-f2fct0dp4elnpka1pev11jg3vuhutbqv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mikenimer.puppyfinder"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
