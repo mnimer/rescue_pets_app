@@ -1,14 +1,15 @@
 import '/backend/backend.dart';
-import '/components/feed_card_widget.dart';
+import '/components/empty_search_results_message_widget.dart';
+import '/components/feed_card_with_carousel_widget.dart';
 import '/components/search_and_sort_bar_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'feed_model.dart';
 export 'feed_model.dart';
@@ -115,62 +116,101 @@ class _FeedWidgetState extends State<FeedWidget> {
                       ),
                     ),
                   ),
-                  PagedListView<DocumentSnapshot<Object?>?, PetsRecord>(
-                    pagingController: _model.setListViewController(
-                      PetsRecord.collection
-                          .where(
-                            'species',
-                            isEqualTo:
-                                widget.species != '' ? widget.species : null,
-                          )
-                          .orderBy('breed', descending: true),
-                    ),
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    reverse: false,
-                    scrollDirection: Axis.vertical,
-                    builderDelegate: PagedChildBuilderDelegate<PetsRecord>(
-                      // Customize what your widget looks like when it's loading the first page.
-                      firstPageProgressIndicatorBuilder: (_) => Center(
-                        child: SizedBox(
-                          width: 50.0,
-                          height: 50.0,
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              FlutterFlowTheme.of(context).primary,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Customize what your widget looks like when it's loading another page.
-                      newPageProgressIndicatorBuilder: (_) => Center(
-                        child: SizedBox(
-                          width: 50.0,
-                          height: 50.0,
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              FlutterFlowTheme.of(context).primary,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      itemBuilder: (context, _, listViewIndex) {
-                        final listViewPetsRecord = _model
-                            .listViewPagingController!.itemList![listViewIndex];
-                        return Container(
-                          decoration: BoxDecoration(),
-                          child: Align(
-                            alignment: AlignmentDirectional(0.00, 0.00),
-                            child: FeedCardWidget(
-                              key: Key(
-                                  'Key9ds_${listViewIndex}_of_${_model.listViewPagingController!.itemList!.length}'),
-                              pet: listViewPetsRecord,
+                  FutureBuilder<List<PetsRecord>>(
+                    future: (_model.firestoreRequestCompleter ??=
+                            Completer<List<PetsRecord>>()
+                              ..complete(queryPetsRecordOnce(
+                                queryBuilder: (petsRecord) => petsRecord
+                                    .where(
+                                      '_isDeleted',
+                                      isEqualTo: false,
+                                    )
+                                    .where(
+                                      'species',
+                                      isEqualTo: widget.species != ''
+                                          ? widget.species
+                                          : null,
+                                    )
+                                    .orderBy('_lastUpdated', descending: true),
+                                limit: 25,
+                              )))
+                        .future,
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                FlutterFlowTheme.of(context).primary,
+                              ),
                             ),
                           ),
                         );
-                      },
-                    ),
+                      }
+                      List<PetsRecord> listViewPetsRecordList = snapshot.data!;
+                      if (listViewPetsRecordList.isEmpty) {
+                        return EmptySearchResultsMessageWidget(
+                          species: widget.species,
+                        );
+                      }
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          setState(
+                              () => _model.firestoreRequestCompleter = null);
+                          await _model.waitForFirestoreRequestCompleted();
+                        },
+                        child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: listViewPetsRecordList.length,
+                          itemBuilder: (context, listViewIndex) {
+                            final listViewPetsRecord =
+                                listViewPetsRecordList[listViewIndex];
+                            return Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 24.0),
+                              child: Material(
+                                color: Colors.transparent,
+                                elevation: 2.0,
+                                child: Container(
+                                  height: 475.0,
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 4.0,
+                                        color: Color(0x33000000),
+                                        offset: Offset(0.0, 2.0),
+                                      )
+                                    ],
+                                  ),
+                                  child: Container(
+                                    decoration: BoxDecoration(),
+                                    child: wrapWithModel(
+                                      model: _model.feedCardWithCarouselModels
+                                          .getModel(
+                                        widget.species,
+                                        listViewIndex,
+                                      ),
+                                      updateCallback: () => setState(() {}),
+                                      child: FeedCardWithCarouselWidget(
+                                        key: Key(
+                                          'Keytvu_${widget.species}',
+                                        ),
+                                        pet: listViewPetsRecord,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

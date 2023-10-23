@@ -23,22 +23,22 @@
 
   
 
-  <meta name="robots" content="noindex" />
+  
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png" />
 
   <!-- Open Graph & SEO tags -->
   <meta property="og:title" content="Rescue Pets" />
-  <meta property="og:description" content="Built with FlutterFlow." />
+  <meta property="og:description" content="Browse dogs and cats available for adoption at rescue shelters around the country." />
   <meta property="og:image" content="https://storage.googleapis.com/flutterflow-prod-hosting/og_splash_gradient.png" /> 
   <meta name="twitter:title" content="Rescue Pets" />
-  <meta name="twitter:description" content="Built with FlutterFlow." />
+  <meta name="twitter:description" content="Browse dogs and cats available for adoption at rescue shelters around the country." />
   <meta name="twitter:image" content="https://storage.googleapis.com/flutterflow-prod-hosting/og_splash_gradient.png" />
   <meta name="twitter:card" content="summary_large_image" />
 
   <title> Rescue Pets </title>
-  <meta name="description" content="Built with FlutterFlow." />
+  <meta name="description" content="Browse dogs and cats available for adoption at rescue shelters around the country." />
     
 
   <!-- Status Bar color in Safari browser (iOS) and PWA -->
@@ -66,14 +66,16 @@
         },
         onEntrypointLoaded: async function(engineInitializer) {
           // Initialize the Flutter engine
-          let appRunner = await engineInitializer.initializeEngine();
+          let appRunner = await engineInitializer.initializeEngine({
+            useColorEmoji: true,
+          });
           // Run the app
           await appRunner.runApp();
         }
       });
     });
   </script>
-  
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyPpojK1y_4VUWClU_WEtEHnR9WxsuVGU"></script>
   
   
   

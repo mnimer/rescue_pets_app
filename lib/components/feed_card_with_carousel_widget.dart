@@ -1,16 +1,16 @@
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/custom_code/widgets/index.dart' as custom_widgets;
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'feed_card_model.dart';
-export 'feed_card_model.dart';
+import 'feed_card_with_carousel_model.dart';
+export 'feed_card_with_carousel_model.dart';
 
-class FeedCardWidget extends StatefulWidget {
-  const FeedCardWidget({
+class FeedCardWithCarouselWidget extends StatefulWidget {
+  const FeedCardWithCarouselWidget({
     Key? key,
     required this.pet,
   }) : super(key: key);
@@ -18,11 +18,13 @@ class FeedCardWidget extends StatefulWidget {
   final PetsRecord? pet;
 
   @override
-  _FeedCardWidgetState createState() => _FeedCardWidgetState();
+  _FeedCardWithCarouselWidgetState createState() =>
+      _FeedCardWithCarouselWidgetState();
 }
 
-class _FeedCardWidgetState extends State<FeedCardWidget> {
-  late FeedCardModel _model;
+class _FeedCardWithCarouselWidgetState
+    extends State<FeedCardWithCarouselWidget> {
+  late FeedCardWithCarouselModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -33,7 +35,7 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => FeedCardModel());
+    _model = createModel(context, () => FeedCardWithCarouselModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -189,13 +191,64 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    width: MediaQuery.sizeOf(context).width * 0.85,
-                    height: 250.0,
-                    child: custom_widgets.ImageShuffleWidget(
-                      width: MediaQuery.sizeOf(context).width * 0.85,
+                  Expanded(
+                    child: Container(
+                      width: double.infinity,
                       height: 250.0,
-                      pictures: widget.pet!.pictures,
+                      child: CarouselSlider(
+                        items: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              widget.pet!.pictures.first.originalUrlCdnLink,
+                              width: 300.0,
+                              height: 200.0,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              'https://picsum.photos/seed/157/600',
+                              width: 300.0,
+                              height: 200.0,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              'https://picsum.photos/seed/26/600',
+                              width: 300.0,
+                              height: 200.0,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              'https://picsum.photos/seed/62/600',
+                              width: 300.0,
+                              height: 200.0,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
+                        carouselController: _model.carouselController ??=
+                            CarouselController(),
+                        options: CarouselOptions(
+                          initialPage: 1,
+                          viewportFraction: 0.5,
+                          disableCenter: false,
+                          enlargeCenterPage: true,
+                          enlargeFactor: 0.25,
+                          enableInfiniteScroll: true,
+                          scrollDirection: Axis.horizontal,
+                          autoPlay: false,
+                          onPageChanged: (index, _) =>
+                              _model.carouselCurrentIndex = index,
+                        ),
+                      ),
                     ),
                   ),
                 ],

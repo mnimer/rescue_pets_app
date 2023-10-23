@@ -5,11 +5,15 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
+          "fieldPath": "_isDeleted",
+          "order": "ASCENDING"
+        },
+        {
           "fieldPath": "species",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "breed",
+          "fieldPath": "_lastUpdated",
           "order": "DESCENDING"
         }
       ]

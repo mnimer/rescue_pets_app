@@ -48,7 +48,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'AdoptionPage',
               path: 'adoptionPage',
-              builder: (context, params) => AdoptionPageWidget(),
+              builder: (context, params) => AdoptionPageWidget(
+                orgId: params.getParam('orgId', ParamType.String),
+                pet: params.getParam(
+                    'pet', ParamType.DocumentReference, false, ['pets']),
+              ),
             ),
             FFRoute(
               name: 'LoginPage',

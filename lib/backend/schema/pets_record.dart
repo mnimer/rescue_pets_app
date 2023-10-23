@@ -21,11 +21,6 @@ class PetsRecord extends FirestoreRecord {
   String get breed => _breed ?? '';
   bool hasBreed() => _breed != null;
 
-  // "animalId" field.
-  int? _animalId;
-  int get animalId => _animalId ?? 0;
-  bool hasAnimalId() => _animalId != null;
-
   // "description" field.
   String? _description;
   String get description => _description ?? '';
@@ -106,14 +101,48 @@ class PetsRecord extends FirestoreRecord {
   String get species => _species ?? '';
   bool hasSpecies() => _species != null;
 
-  // "isDeleted" field.
+  // "_allBreeds" field.
+  List<String>? _allBreeds;
+  List<String> get allBreeds => _allBreeds ?? const [];
+  bool hasAllBreeds() => _allBreeds != null;
+
+  // "_birthDate" field.
+  int? _birthDate;
+  int get birthDate => _birthDate ?? 0;
+  bool hasBirthDate() => _birthDate != null;
+
+  // "_mediaLastUpdated" field.
+  int? _mediaLastUpdated;
+  int get mediaLastUpdated => _mediaLastUpdated ?? 0;
+  bool hasMediaLastUpdated() => _mediaLastUpdated != null;
+
+  // "_saveInCollection" field.
+  int? _saveInCollection;
+  int get saveInCollection => _saveInCollection ?? 0;
+  bool hasSaveInCollection() => _saveInCollection != null;
+
+  // "_lastUpdated" field.
+  int? _lastUpdated;
+  int get lastUpdated => _lastUpdated ?? 0;
+  bool hasLastUpdated() => _lastUpdated != null;
+
+  // "location" field.
+  OrgLocationStruct? _location;
+  OrgLocationStruct get location => _location ?? OrgLocationStruct();
+  bool hasLocation() => _location != null;
+
+  // "_isDeleted" field.
   bool? _isDeleted;
   bool get isDeleted => _isDeleted ?? false;
   bool hasIsDeleted() => _isDeleted != null;
 
+  // "animalID" field.
+  String? _animalID;
+  String get animalID => _animalID ?? '';
+  bool hasAnimalID() => _animalID != null;
+
   void _initializeFields() {
     _breed = snapshotData['breed'] as String?;
-    _animalId = castToType<int>(snapshotData['animalId']);
     _description = snapshotData['description'] as String?;
     _descriptionPlain = snapshotData['descriptionPlain'] as String?;
     _name = snapshotData['name'] as String?;
@@ -133,7 +162,14 @@ class PetsRecord extends FirestoreRecord {
       PetPictureStruct.fromMap,
     );
     _species = snapshotData['species'] as String?;
-    _isDeleted = snapshotData['isDeleted'] as bool?;
+    _allBreeds = getDataList(snapshotData['_allBreeds']);
+    _birthDate = castToType<int>(snapshotData['_birthDate']);
+    _mediaLastUpdated = castToType<int>(snapshotData['_mediaLastUpdated']);
+    _saveInCollection = castToType<int>(snapshotData['_saveInCollection']);
+    _lastUpdated = castToType<int>(snapshotData['_lastUpdated']);
+    _location = OrgLocationStruct.maybeFromMap(snapshotData['location']);
+    _isDeleted = snapshotData['_isDeleted'] as bool?;
+    _animalID = snapshotData['animalID'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -171,7 +207,6 @@ class PetsRecord extends FirestoreRecord {
 
 Map<String, dynamic> createPetsRecordData({
   String? breed,
-  int? animalId,
   String? description,
   String? descriptionPlain,
   String? name,
@@ -187,12 +222,17 @@ Map<String, dynamic> createPetsRecordData({
   String? color,
   String? declawed,
   String? species,
+  int? birthDate,
+  int? mediaLastUpdated,
+  int? saveInCollection,
+  int? lastUpdated,
+  OrgLocationStruct? location,
   bool? isDeleted,
+  String? animalID,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'breed': breed,
-      'animalId': animalId,
       'description': description,
       'descriptionPlain': descriptionPlain,
       'name': name,
@@ -208,9 +248,18 @@ Map<String, dynamic> createPetsRecordData({
       'color': color,
       'declawed': declawed,
       'species': species,
-      'isDeleted': isDeleted,
+      '_birthDate': birthDate,
+      '_mediaLastUpdated': mediaLastUpdated,
+      '_saveInCollection': saveInCollection,
+      '_lastUpdated': lastUpdated,
+      'location': OrgLocationStruct().toMap(),
+      '_isDeleted': isDeleted,
+      'animalID': animalID,
     }.withoutNulls,
   );
+
+  // Handle nested data for "location" field.
+  addOrgLocationStructData(firestoreData, location, 'location');
 
   return firestoreData;
 }
@@ -222,7 +271,6 @@ class PetsRecordDocumentEquality implements Equality<PetsRecord> {
   bool equals(PetsRecord? e1, PetsRecord? e2) {
     const listEquality = ListEquality();
     return e1?.breed == e2?.breed &&
-        e1?.animalId == e2?.animalId &&
         e1?.description == e2?.description &&
         e1?.descriptionPlain == e2?.descriptionPlain &&
         e1?.name == e2?.name &&
@@ -239,13 +287,19 @@ class PetsRecordDocumentEquality implements Equality<PetsRecord> {
         e1?.declawed == e2?.declawed &&
         listEquality.equals(e1?.pictures, e2?.pictures) &&
         e1?.species == e2?.species &&
-        e1?.isDeleted == e2?.isDeleted;
+        listEquality.equals(e1?.allBreeds, e2?.allBreeds) &&
+        e1?.birthDate == e2?.birthDate &&
+        e1?.mediaLastUpdated == e2?.mediaLastUpdated &&
+        e1?.saveInCollection == e2?.saveInCollection &&
+        e1?.lastUpdated == e2?.lastUpdated &&
+        e1?.location == e2?.location &&
+        e1?.isDeleted == e2?.isDeleted &&
+        e1?.animalID == e2?.animalID;
   }
 
   @override
   int hash(PetsRecord? e) => const ListEquality().hash([
         e?.breed,
-        e?.animalId,
         e?.description,
         e?.descriptionPlain,
         e?.name,
@@ -262,7 +316,14 @@ class PetsRecordDocumentEquality implements Equality<PetsRecord> {
         e?.declawed,
         e?.pictures,
         e?.species,
-        e?.isDeleted
+        e?.allBreeds,
+        e?.birthDate,
+        e?.mediaLastUpdated,
+        e?.saveInCollection,
+        e?.lastUpdated,
+        e?.location,
+        e?.isDeleted,
+        e?.animalID
       ]);
 
   @override

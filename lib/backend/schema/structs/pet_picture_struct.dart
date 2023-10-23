@@ -13,11 +13,19 @@ class PetPictureStruct extends FFFirebaseStruct {
     String? smallUrl,
     String? largeUrl,
     String? fullsizeUrl,
-    String? mediaOrder,
+    String? originalUrl,
+    String? smallUrlBase64,
+    String? originalUrlPath,
+    String? originalUrlCdnLink,
+    int? mediaOrder,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _smallUrl = smallUrl,
         _largeUrl = largeUrl,
         _fullsizeUrl = fullsizeUrl,
+        _originalUrl = originalUrl,
+        _smallUrlBase64 = smallUrlBase64,
+        _originalUrlPath = originalUrlPath,
+        _originalUrlCdnLink = originalUrlCdnLink,
         _mediaOrder = mediaOrder,
         super(firestoreUtilData);
 
@@ -39,10 +47,35 @@ class PetPictureStruct extends FFFirebaseStruct {
   set fullsizeUrl(String? val) => _fullsizeUrl = val;
   bool hasFullsizeUrl() => _fullsizeUrl != null;
 
+  // "originalUrl" field.
+  String? _originalUrl;
+  String get originalUrl => _originalUrl ?? '';
+  set originalUrl(String? val) => _originalUrl = val;
+  bool hasOriginalUrl() => _originalUrl != null;
+
+  // "smallUrlBase64" field.
+  String? _smallUrlBase64;
+  String get smallUrlBase64 => _smallUrlBase64 ?? '';
+  set smallUrlBase64(String? val) => _smallUrlBase64 = val;
+  bool hasSmallUrlBase64() => _smallUrlBase64 != null;
+
+  // "originalUrlPath" field.
+  String? _originalUrlPath;
+  String get originalUrlPath => _originalUrlPath ?? '';
+  set originalUrlPath(String? val) => _originalUrlPath = val;
+  bool hasOriginalUrlPath() => _originalUrlPath != null;
+
+  // "originalUrlCdnLink" field.
+  String? _originalUrlCdnLink;
+  String get originalUrlCdnLink => _originalUrlCdnLink ?? '';
+  set originalUrlCdnLink(String? val) => _originalUrlCdnLink = val;
+  bool hasOriginalUrlCdnLink() => _originalUrlCdnLink != null;
+
   // "mediaOrder" field.
-  String? _mediaOrder;
-  String get mediaOrder => _mediaOrder ?? '';
-  set mediaOrder(String? val) => _mediaOrder = val;
+  int? _mediaOrder;
+  int get mediaOrder => _mediaOrder ?? 0;
+  set mediaOrder(int? val) => _mediaOrder = val;
+  void incrementMediaOrder(int amount) => _mediaOrder = mediaOrder + amount;
   bool hasMediaOrder() => _mediaOrder != null;
 
   static PetPictureStruct fromMap(Map<String, dynamic> data) =>
@@ -50,7 +83,11 @@ class PetPictureStruct extends FFFirebaseStruct {
         smallUrl: data['smallUrl'] as String?,
         largeUrl: data['largeUrl'] as String?,
         fullsizeUrl: data['fullsizeUrl'] as String?,
-        mediaOrder: data['mediaOrder'] as String?,
+        originalUrl: data['originalUrl'] as String?,
+        smallUrlBase64: data['smallUrlBase64'] as String?,
+        originalUrlPath: data['originalUrlPath'] as String?,
+        originalUrlCdnLink: data['originalUrlCdnLink'] as String?,
+        mediaOrder: castToType<int>(data['mediaOrder']),
       );
 
   static PetPictureStruct? maybeFromMap(dynamic data) =>
@@ -60,6 +97,10 @@ class PetPictureStruct extends FFFirebaseStruct {
         'smallUrl': _smallUrl,
         'largeUrl': _largeUrl,
         'fullsizeUrl': _fullsizeUrl,
+        'originalUrl': _originalUrl,
+        'smallUrlBase64': _smallUrlBase64,
+        'originalUrlPath': _originalUrlPath,
+        'originalUrlCdnLink': _originalUrlCdnLink,
         'mediaOrder': _mediaOrder,
       }.withoutNulls;
 
@@ -77,9 +118,25 @@ class PetPictureStruct extends FFFirebaseStruct {
           _fullsizeUrl,
           ParamType.String,
         ),
+        'originalUrl': serializeParam(
+          _originalUrl,
+          ParamType.String,
+        ),
+        'smallUrlBase64': serializeParam(
+          _smallUrlBase64,
+          ParamType.String,
+        ),
+        'originalUrlPath': serializeParam(
+          _originalUrlPath,
+          ParamType.String,
+        ),
+        'originalUrlCdnLink': serializeParam(
+          _originalUrlCdnLink,
+          ParamType.String,
+        ),
         'mediaOrder': serializeParam(
           _mediaOrder,
-          ParamType.String,
+          ParamType.int,
         ),
       }.withoutNulls;
 
@@ -100,9 +157,29 @@ class PetPictureStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        originalUrl: deserializeParam(
+          data['originalUrl'],
+          ParamType.String,
+          false,
+        ),
+        smallUrlBase64: deserializeParam(
+          data['smallUrlBase64'],
+          ParamType.String,
+          false,
+        ),
+        originalUrlPath: deserializeParam(
+          data['originalUrlPath'],
+          ParamType.String,
+          false,
+        ),
+        originalUrlCdnLink: deserializeParam(
+          data['originalUrlCdnLink'],
+          ParamType.String,
+          false,
+        ),
         mediaOrder: deserializeParam(
           data['mediaOrder'],
-          ParamType.String,
+          ParamType.int,
           false,
         ),
       );
@@ -116,19 +193,35 @@ class PetPictureStruct extends FFFirebaseStruct {
         smallUrl == other.smallUrl &&
         largeUrl == other.largeUrl &&
         fullsizeUrl == other.fullsizeUrl &&
+        originalUrl == other.originalUrl &&
+        smallUrlBase64 == other.smallUrlBase64 &&
+        originalUrlPath == other.originalUrlPath &&
+        originalUrlCdnLink == other.originalUrlCdnLink &&
         mediaOrder == other.mediaOrder;
   }
 
   @override
-  int get hashCode =>
-      const ListEquality().hash([smallUrl, largeUrl, fullsizeUrl, mediaOrder]);
+  int get hashCode => const ListEquality().hash([
+        smallUrl,
+        largeUrl,
+        fullsizeUrl,
+        originalUrl,
+        smallUrlBase64,
+        originalUrlPath,
+        originalUrlCdnLink,
+        mediaOrder
+      ]);
 }
 
 PetPictureStruct createPetPictureStruct({
   String? smallUrl,
   String? largeUrl,
   String? fullsizeUrl,
-  String? mediaOrder,
+  String? originalUrl,
+  String? smallUrlBase64,
+  String? originalUrlPath,
+  String? originalUrlCdnLink,
+  int? mediaOrder,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -138,6 +231,10 @@ PetPictureStruct createPetPictureStruct({
       smallUrl: smallUrl,
       largeUrl: largeUrl,
       fullsizeUrl: fullsizeUrl,
+      originalUrl: originalUrl,
+      smallUrlBase64: smallUrlBase64,
+      originalUrlPath: originalUrlPath,
+      originalUrlCdnLink: originalUrlCdnLink,
       mediaOrder: mediaOrder,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,

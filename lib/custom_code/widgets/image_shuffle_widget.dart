@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'dart:convert';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -65,6 +67,7 @@ class _ImageShuffleWidgetState extends State<ImageShuffleWidget> {
 
   @override
   Widget build(BuildContext context) {
+    //,{"width": 335, "height": 250, "fit": BoxFit.cover}
     return Container(
       width: MediaQuery.sizeOf(context).width,
       height: MediaQuery.sizeOf(context).height * 1,
@@ -83,21 +86,14 @@ class _ImageShuffleWidgetState extends State<ImageShuffleWidget> {
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                 ),
                 child: Transform.rotate(
-                  angle: (int.parse(value.mediaOrder) % 2 == 0)
-                      ? -0.1047
-                      : (int.parse(value.mediaOrder) % 3 == 0)
-                          ? 0.1047
-                          : 0,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      value.smallUrl,
-                      width: 335,
-                      height: 250,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+                    angle: (int.parse(value.mediaOrder) % 2 == 0)
+                        ? -0.1047
+                        : (int.parse(value.mediaOrder) % 3 == 0)
+                            ? 0.1047
+                            : 0,
+                    child: ClipRRect(
+                        child: Image.memory(base64Decode(value.smallUrlBase64),
+                            width: 335, height: 250, fit: BoxFit.cover))),
               ),
             );
           }).toList(),

@@ -46,6 +46,26 @@ class PicturesRecord extends FirestoreRecord {
   int get lastUpdated => _lastUpdated ?? 0;
   bool hasLastUpdated() => _lastUpdated != null;
 
+  // "smallUrlBase64" field.
+  String? _smallUrlBase64;
+  String get smallUrlBase64 => _smallUrlBase64 ?? '';
+  bool hasSmallUrlBase64() => _smallUrlBase64 != null;
+
+  // "originalUrl" field.
+  String? _originalUrl;
+  String get originalUrl => _originalUrl ?? '';
+  bool hasOriginalUrl() => _originalUrl != null;
+
+  // "originalUrlPath" field.
+  String? _originalUrlPath;
+  String get originalUrlPath => _originalUrlPath ?? '';
+  bool hasOriginalUrlPath() => _originalUrlPath != null;
+
+  // "originalUrlCdnLink" field.
+  String? _originalUrlCdnLink;
+  String get originalUrlCdnLink => _originalUrlCdnLink ?? '';
+  bool hasOriginalUrlCdnLink() => _originalUrlCdnLink != null;
+
   void _initializeFields() {
     _largeUrl = snapshotData['largeUrl'] as String?;
     _smallUrl = snapshotData['smallUrl'] as String?;
@@ -53,6 +73,10 @@ class PicturesRecord extends FirestoreRecord {
     _fullsizeUrl = snapshotData['fullsizeUrl'] as String?;
     _mediaOrder = castToType<int>(snapshotData['mediaOrder']);
     _lastUpdated = castToType<int>(snapshotData['lastUpdated']);
+    _smallUrlBase64 = snapshotData['smallUrlBase64'] as String?;
+    _originalUrl = snapshotData['originalUrl'] as String?;
+    _originalUrlPath = snapshotData['originalUrlPath'] as String?;
+    _originalUrlCdnLink = snapshotData['originalUrlCdnLink'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -96,6 +120,10 @@ Map<String, dynamic> createPicturesRecordData({
   String? fullsizeUrl,
   int? mediaOrder,
   int? lastUpdated,
+  String? smallUrlBase64,
+  String? originalUrl,
+  String? originalUrlPath,
+  String? originalUrlCdnLink,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -105,6 +133,10 @@ Map<String, dynamic> createPicturesRecordData({
       'fullsizeUrl': fullsizeUrl,
       'mediaOrder': mediaOrder,
       'lastUpdated': lastUpdated,
+      'smallUrlBase64': smallUrlBase64,
+      'originalUrl': originalUrl,
+      'originalUrlPath': originalUrlPath,
+      'originalUrlCdnLink': originalUrlCdnLink,
     }.withoutNulls,
   );
 
@@ -121,7 +153,11 @@ class PicturesRecordDocumentEquality implements Equality<PicturesRecord> {
         e1?.thumbnailUrl == e2?.thumbnailUrl &&
         e1?.fullsizeUrl == e2?.fullsizeUrl &&
         e1?.mediaOrder == e2?.mediaOrder &&
-        e1?.lastUpdated == e2?.lastUpdated;
+        e1?.lastUpdated == e2?.lastUpdated &&
+        e1?.smallUrlBase64 == e2?.smallUrlBase64 &&
+        e1?.originalUrl == e2?.originalUrl &&
+        e1?.originalUrlPath == e2?.originalUrlPath &&
+        e1?.originalUrlCdnLink == e2?.originalUrlCdnLink;
   }
 
   @override
@@ -131,7 +167,11 @@ class PicturesRecordDocumentEquality implements Equality<PicturesRecord> {
         e?.thumbnailUrl,
         e?.fullsizeUrl,
         e?.mediaOrder,
-        e?.lastUpdated
+        e?.lastUpdated,
+        e?.smallUrlBase64,
+        e?.originalUrl,
+        e?.originalUrlPath,
+        e?.originalUrlCdnLink
       ]);
 
   @override
