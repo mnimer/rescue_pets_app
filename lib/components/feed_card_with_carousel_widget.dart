@@ -52,7 +52,7 @@ class _FeedCardWithCarouselWidgetState
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
       child: Column(
-        mainAxisSize: MainAxisSize.max,
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -192,63 +192,73 @@ class _FeedCardWithCarouselWidgetState
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: Container(
-                      width: double.infinity,
-                      height: 250.0,
-                      child: CarouselSlider(
-                        items: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.network(
-                              widget.pet!.pictures.first.originalUrlCdnLink,
-                              width: 300.0,
-                              height: 200.0,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.network(
-                              'https://picsum.photos/seed/157/600',
-                              width: 300.0,
-                              height: 200.0,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.network(
-                              'https://picsum.photos/seed/26/600',
-                              width: 300.0,
-                              height: 200.0,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.network(
-                              'https://picsum.photos/seed/62/600',
-                              width: 300.0,
-                              height: 200.0,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ],
-                        carouselController: _model.carouselController ??=
-                            CarouselController(),
-                        options: CarouselOptions(
-                          initialPage: 1,
-                          viewportFraction: 0.5,
-                          disableCenter: false,
-                          enlargeCenterPage: true,
-                          enlargeFactor: 0.25,
-                          enableInfiniteScroll: true,
-                          scrollDirection: Axis.horizontal,
-                          autoPlay: false,
-                          onPageChanged: (index, _) =>
-                              _model.carouselCurrentIndex = index,
+                    child: FutureBuilder<List<PetsRecord>>(
+                      future: queryPetsRecordOnce(
+                        queryBuilder: (petsRecord) => petsRecord.where(
+                          'animalID',
+                          isEqualTo: widget.pet?.animalID,
                         ),
+                        limit: 3,
                       ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50.0,
+                              height: 50.0,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  FlutterFlowTheme.of(context).primary,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                        List<PetsRecord> carouselPetsRecordList =
+                            snapshot.data!;
+                        return Container(
+                          width: double.infinity,
+                          height: 180.0,
+                          child: CarouselSlider.builder(
+                            itemCount: carouselPetsRecordList.length,
+                            itemBuilder: (context, carouselIndex, _) {
+                              final carouselPetsRecord =
+                                  carouselPetsRecordList[carouselIndex];
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image.network(
+                                  carouselPetsRecord.pictures
+                                      .take(3)
+                                      .toList()[valueOrDefault<int>(
+                                        _model.carouselCurrentIndex,
+                                        0,
+                                      )]
+                                      .originalUrlCdnLink,
+                                  width: 300.0,
+                                  height: 200.0,
+                                  fit: BoxFit.cover,
+                                ),
+                              );
+                            },
+                            carouselController: _model.carouselController ??=
+                                CarouselController(),
+                            options: CarouselOptions(
+                              initialPage:
+                                  min(1, carouselPetsRecordList.length - 1),
+                              viewportFraction: 0.5,
+                              disableCenter: true,
+                              enlargeCenterPage: true,
+                              enlargeFactor: 0.25,
+                              enableInfiniteScroll: true,
+                              scrollDirection: Axis.horizontal,
+                              autoPlay: false,
+                              onPageChanged: (index, _) =>
+                                  _model.carouselCurrentIndex = index,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],

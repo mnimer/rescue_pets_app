@@ -26,22 +26,16 @@ class FeedModel extends FlutterFlowModel<FeedWidget> {
   // Model for SearchAndSortBar component.
   late SearchAndSortBarModel searchAndSortBarModel;
   Completer<List<PetsRecord>>? firestoreRequestCompleter;
-  // Models for FeedCardWithCarousel dynamic component.
-  late FlutterFlowDynamicModels<FeedCardWithCarouselModel>
-      feedCardWithCarouselModels;
 
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {
     searchAndSortBarModel = createModel(context, () => SearchAndSortBarModel());
-    feedCardWithCarouselModels =
-        FlutterFlowDynamicModels(() => FeedCardWithCarouselModel());
   }
 
   void dispose() {
     unfocusNode.dispose();
     searchAndSortBarModel.dispose();
-    feedCardWithCarouselModels.dispose();
   }
 
   /// Action blocks are added here.
