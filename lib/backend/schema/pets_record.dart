@@ -141,6 +141,11 @@ class PetsRecord extends FirestoreRecord {
   String get animalID => _animalID ?? '';
   bool hasAnimalID() => _animalID != null;
 
+  // "petImages" field.
+  List<String>? _petImages;
+  List<String> get petImages => _petImages ?? const [];
+  bool hasPetImages() => _petImages != null;
+
   void _initializeFields() {
     _breed = snapshotData['breed'] as String?;
     _description = snapshotData['description'] as String?;
@@ -170,6 +175,7 @@ class PetsRecord extends FirestoreRecord {
     _location = OrgLocationStruct.maybeFromMap(snapshotData['location']);
     _isDeleted = snapshotData['_isDeleted'] as bool?;
     _animalID = snapshotData['animalID'] as String?;
+    _petImages = getDataList(snapshotData['petImages']);
   }
 
   static CollectionReference get collection =>
@@ -294,7 +300,8 @@ class PetsRecordDocumentEquality implements Equality<PetsRecord> {
         e1?.lastUpdated == e2?.lastUpdated &&
         e1?.location == e2?.location &&
         e1?.isDeleted == e2?.isDeleted &&
-        e1?.animalID == e2?.animalID;
+        e1?.animalID == e2?.animalID &&
+        listEquality.equals(e1?.petImages, e2?.petImages);
   }
 
   @override
@@ -323,7 +330,8 @@ class PetsRecordDocumentEquality implements Equality<PetsRecord> {
         e?.lastUpdated,
         e?.location,
         e?.isDeleted,
-        e?.animalID
+        e?.animalID,
+        e?.petImages
       ]);
 
   @override

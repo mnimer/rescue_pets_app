@@ -170,41 +170,13 @@ class _FeedWidgetState extends State<FeedWidget> {
                           itemBuilder: (context, listViewIndex) {
                             final listViewPetsRecord =
                                 listViewPetsRecordList[listViewIndex];
-                            return Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 24.0),
-                              child: Material(
-                                color: Colors.transparent,
-                                elevation: 2.0,
-                                child: Container(
-                                  height: 475.0,
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 4.0,
-                                        color: Color(0x33000000),
-                                        offset: Offset(0.0, 2.0),
-                                      )
-                                    ],
-                                  ),
-                                  child: Container(
-                                    decoration: BoxDecoration(),
-                                    child: wrapWithModel(
-                                      model: _model.feedCardWithCarouselModels
-                                          .getModel(
-                                        widget.species,
-                                        listViewIndex,
-                                      ),
-                                      updateCallback: () => setState(() {}),
-                                      child: FeedCardWithCarouselWidget(
-                                        key: Key(
-                                          'Keytvu_${widget.species}',
-                                        ),
-                                        pet: listViewPetsRecord,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                            return Container(
+                              height: 425.0,
+                              decoration: BoxDecoration(),
+                              child: FeedCardWithCarouselWidget(
+                                key: Key(
+                                    'Keyguj_${listViewIndex}_of_${listViewPetsRecordList.length}'),
+                                pet: listViewPetsRecord,
                               ),
                             );
                           },

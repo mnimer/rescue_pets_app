@@ -86,9 +86,9 @@ class _ImageShuffleWidgetState extends State<ImageShuffleWidget> {
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                 ),
                 child: Transform.rotate(
-                    angle: (int.parse(value.mediaOrder) % 2 == 0)
+                    angle: (value.mediaOrder % 2 == 0)
                         ? -0.1047
-                        : (int.parse(value.mediaOrder) % 3 == 0)
+                        : (value.mediaOrder % 3 == 0)
                             ? 0.1047
                             : 0,
                     child: ClipRRect(
