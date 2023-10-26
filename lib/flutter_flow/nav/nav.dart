@@ -48,10 +48,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'AdoptionPage',
               path: 'adoptionPage',
+              asyncParams: {
+                'pet': getDoc(['pets'], PetsRecord.fromSnapshot),
+              },
               builder: (context, params) => AdoptionPageWidget(
                 orgId: params.getParam('orgId', ParamType.String),
-                pet: params.getParam(
-                    'pet', ParamType.DocumentReference, false, ['pets']),
+                pet: params.getParam('pet', ParamType.Document),
               ),
             ),
             FFRoute(
@@ -84,6 +86,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                       animalType:
                           params.getParam('animalType', ParamType.String),
                     ),
+            ),
+            FFRoute(
+              name: 'testPage',
+              path: 'testPage',
+              builder: (context, params) => TestPageWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),

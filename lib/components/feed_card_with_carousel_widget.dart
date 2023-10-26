@@ -58,7 +58,7 @@ class _FeedCardWithCarouselWidgetState
           Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Align(
                 alignment: AlignmentDirectional(0.00, 0.00),
@@ -87,6 +87,9 @@ class _FeedCardWithCarouselWidgetState
                       valueOrDefault<String>(
                         widget.pet?.name,
                         'unknown',
+                      ).maybeHandleOverflow(
+                        maxChars: 20,
+                        replacement: '…',
                       ),
                       maxLines: 1,
                       style: FlutterFlowTheme.of(context).bodyMedium,
@@ -118,11 +121,12 @@ class _FeedCardWithCarouselWidgetState
                             ParamType.String,
                           ),
                           'pet': serializeParam(
-                            widget.pet?.reference,
-                            ParamType.DocumentReference,
+                            widget.pet,
+                            ParamType.Document,
                           ),
                         }.withoutNulls,
                         extra: <String, dynamic>{
+                          'pet': widget.pet,
                           kTransitionInfoKey: TransitionInfo(
                             hasTransition: true,
                             transitionType: PageTransitionType.leftToRight,
@@ -131,7 +135,7 @@ class _FeedCardWithCarouselWidgetState
                       );
                     },
                     child: Text(
-                      'Adopt',
+                      '| How to Adopt',
                       style: FlutterFlowTheme.of(context).bodyMedium,
                     ),
                   ),
@@ -149,11 +153,12 @@ class _FeedCardWithCarouselWidgetState
                             ParamType.String,
                           ),
                           'pet': serializeParam(
-                            widget.pet?.reference,
-                            ParamType.DocumentReference,
+                            widget.pet,
+                            ParamType.Document,
                           ),
                         }.withoutNulls,
                         extra: <String, dynamic>{
+                          'pet': widget.pet,
                           kTransitionInfoKey: TransitionInfo(
                             hasTransition: true,
                             transitionType: PageTransitionType.leftToRight,
@@ -191,75 +196,95 @@ class _FeedCardWithCarouselWidgetState
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: FutureBuilder<List<PetsRecord>>(
-                      future: queryPetsRecordOnce(
-                        queryBuilder: (petsRecord) => petsRecord.where(
-                          'animalID',
-                          isEqualTo: widget.pet?.animalID,
-                        ),
-                        limit: 3,
-                      ),
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  FlutterFlowTheme.of(context).primary,
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-                        List<PetsRecord> carouselPetsRecordList =
-                            snapshot.data!;
+                  Builder(
+                    builder: (context) {
+                      if (valueOrDefault<bool>(
+                        widget.pet?.isDeleted,
+                        false,
+                      )) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.network(
+                            'https://picsum.photos/seed/61/600',
+                            width: 300.0,
+                            height: 200.0,
+                            fit: BoxFit.cover,
+                          ),
+                        );
+                      } else {
                         return Container(
-                          width: double.infinity,
-                          height: 180.0,
-                          child: CarouselSlider.builder(
-                            itemCount: carouselPetsRecordList.length,
-                            itemBuilder: (context, carouselIndex, _) {
-                              final carouselPetsRecord =
-                                  carouselPetsRecordList[carouselIndex];
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image.network(
-                                  carouselPetsRecord.pictures
-                                      .take(3)
-                                      .toList()[valueOrDefault<int>(
-                                        _model.carouselCurrentIndex,
-                                        0,
-                                      )]
-                                      .originalUrlCdnLink,
-                                  width: 300.0,
-                                  height: 200.0,
-                                  fit: BoxFit.cover,
+                          width: MediaQuery.sizeOf(context).width * 0.9,
+                          height: 200.0,
+                          decoration: BoxDecoration(),
+                          child: FutureBuilder<List<PetsRecord>>(
+                            future: queryPetsRecordOnce(
+                              queryBuilder: (petsRecord) => petsRecord.where(
+                                'animalID',
+                                isEqualTo: widget.pet?.animalID,
+                              ),
+                              limit: 5,
+                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        FlutterFlowTheme.of(context).primary,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                              List<PetsRecord> carouselPetsRecordList =
+                                  snapshot.data!;
+                              return Container(
+                                width: double.infinity,
+                                height: 180.0,
+                                child: CarouselSlider.builder(
+                                  itemCount: carouselPetsRecordList.length,
+                                  itemBuilder: (context, carouselIndex, _) {
+                                    final carouselPetsRecord =
+                                        carouselPetsRecordList[carouselIndex];
+                                    return ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Image.network(
+                                        carouselPetsRecord.pictures
+                                            .take(5)
+                                            .toList()[carouselIndex]
+                                            .originalUrlCdnLink,
+                                        width: 300.0,
+                                        height: 200.0,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    );
+                                  },
+                                  carouselController:
+                                      _model.carouselController ??=
+                                          CarouselController(),
+                                  options: CarouselOptions(
+                                    initialPage: min(
+                                        1, carouselPetsRecordList.length - 1),
+                                    viewportFraction: 0.5,
+                                    disableCenter: true,
+                                    enlargeCenterPage: true,
+                                    enlargeFactor: 0.25,
+                                    enableInfiniteScroll: true,
+                                    scrollDirection: Axis.horizontal,
+                                    autoPlay: false,
+                                    onPageChanged: (index, _) =>
+                                        _model.carouselCurrentIndex = index,
+                                  ),
                                 ),
                               );
                             },
-                            carouselController: _model.carouselController ??=
-                                CarouselController(),
-                            options: CarouselOptions(
-                              initialPage:
-                                  min(1, carouselPetsRecordList.length - 1),
-                              viewportFraction: 0.5,
-                              disableCenter: true,
-                              enlargeCenterPage: true,
-                              enlargeFactor: 0.25,
-                              enableInfiniteScroll: true,
-                              scrollDirection: Axis.horizontal,
-                              autoPlay: false,
-                              onPageChanged: (index, _) =>
-                                  _model.carouselCurrentIndex = index,
-                            ),
                           ),
                         );
-                      },
-                    ),
+                      }
+                    },
                   ),
                 ],
               ),
@@ -364,11 +389,12 @@ class _FeedCardWithCarouselWidgetState
                               ParamType.String,
                             ),
                             'pet': serializeParam(
-                              widget.pet?.reference,
-                              ParamType.DocumentReference,
+                              widget.pet,
+                              ParamType.Document,
                             ),
                           }.withoutNulls,
                           extra: <String, dynamic>{
+                            'pet': widget.pet,
                             kTransitionInfoKey: TransitionInfo(
                               hasTransition: true,
                               transitionType: PageTransitionType.leftToRight,
@@ -396,11 +422,12 @@ class _FeedCardWithCarouselWidgetState
                               ParamType.String,
                             ),
                             'pet': serializeParam(
-                              widget.pet?.reference,
-                              ParamType.DocumentReference,
+                              widget.pet,
+                              ParamType.Document,
                             ),
                           }.withoutNulls,
                           extra: <String, dynamic>{
+                            'pet': widget.pet,
                             kTransitionInfoKey: TransitionInfo(
                               hasTransition: true,
                               transitionType: PageTransitionType.leftToRight,

@@ -56,7 +56,7 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
           Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Align(
                 alignment: AlignmentDirectional(0.00, 0.00),
@@ -85,6 +85,9 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                       valueOrDefault<String>(
                         widget.pet?.name,
                         'unknown',
+                      ).maybeHandleOverflow(
+                        maxChars: 20,
+                        replacement: '…',
                       ),
                       maxLines: 1,
                       style: FlutterFlowTheme.of(context).bodyMedium,
@@ -101,6 +104,7 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
               ),
               Row(
                 mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   InkWell(
                     splashColor: Colors.transparent,
@@ -116,11 +120,12 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                             ParamType.String,
                           ),
                           'pet': serializeParam(
-                            widget.pet?.reference,
-                            ParamType.DocumentReference,
+                            widget.pet,
+                            ParamType.Document,
                           ),
                         }.withoutNulls,
                         extra: <String, dynamic>{
+                          'pet': widget.pet,
                           kTransitionInfoKey: TransitionInfo(
                             hasTransition: true,
                             transitionType: PageTransitionType.leftToRight,
@@ -129,7 +134,7 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                       );
                     },
                     child: Text(
-                      'Adopt',
+                      'How to Adopt',
                       style: FlutterFlowTheme.of(context).bodyMedium,
                     ),
                   ),
@@ -147,11 +152,12 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                             ParamType.String,
                           ),
                           'pet': serializeParam(
-                            widget.pet?.reference,
-                            ParamType.DocumentReference,
+                            widget.pet,
+                            ParamType.Document,
                           ),
                         }.withoutNulls,
                         extra: <String, dynamic>{
+                          'pet': widget.pet,
                           kTransitionInfoKey: TransitionInfo(
                             hasTransition: true,
                             transitionType: PageTransitionType.leftToRight,
@@ -301,11 +307,12 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                               ParamType.String,
                             ),
                             'pet': serializeParam(
-                              widget.pet?.reference,
-                              ParamType.DocumentReference,
+                              widget.pet,
+                              ParamType.Document,
                             ),
                           }.withoutNulls,
                           extra: <String, dynamic>{
+                            'pet': widget.pet,
                             kTransitionInfoKey: TransitionInfo(
                               hasTransition: true,
                               transitionType: PageTransitionType.leftToRight,
@@ -333,11 +340,12 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                               ParamType.String,
                             ),
                             'pet': serializeParam(
-                              widget.pet?.reference,
-                              ParamType.DocumentReference,
+                              widget.pet,
+                              ParamType.Document,
                             ),
                           }.withoutNulls,
                           extra: <String, dynamic>{
+                            'pet': widget.pet,
                             kTransitionInfoKey: TransitionInfo(
                               hasTransition: true,
                               transitionType: PageTransitionType.leftToRight,

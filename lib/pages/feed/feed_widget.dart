@@ -171,7 +171,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                             final listViewPetsRecord =
                                 listViewPetsRecordList[listViewIndex];
                             return Container(
-                              height: 425.0,
+                              height: 450.0,
                               decoration: BoxDecoration(),
                               child: FeedCardWithCarouselWidget(
                                 key: Key(
