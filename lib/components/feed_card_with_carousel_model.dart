@@ -8,8 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class FeedCardWithCarouselModel
-    extends FlutterFlowModel<FeedCardWithCarouselWidget> {
+class FeedCardWithCarouselModel extends FlutterFlowModel<FeedCardWithCarouselWidget> {
   ///  State fields for stateful widgets in this component.
 
   // State field(s) for Carousel widget.

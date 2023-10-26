@@ -18,12 +18,10 @@ class FeedCardWithCarouselWidget extends StatefulWidget {
   final PetsRecord? pet;
 
   @override
-  _FeedCardWithCarouselWidgetState createState() =>
-      _FeedCardWithCarouselWidgetState();
+  _FeedCardWithCarouselWidgetState createState() => _FeedCardWithCarouselWidgetState();
 }
 
-class _FeedCardWithCarouselWidgetState
-    extends State<FeedCardWithCarouselWidget> {
+class _FeedCardWithCarouselWidgetState extends State<FeedCardWithCarouselWidget> {
   late FeedCardWithCarouselModel _model;
 
   @override
@@ -215,16 +213,14 @@ class _FeedCardWithCarouselWidgetState
                             ),
                           );
                         }
-                        List<PetsRecord> carouselPetsRecordList =
-                            snapshot.data!;
+                        List<PetsRecord> carouselPetsRecordList = snapshot.data!;
                         return Container(
                           width: double.infinity,
                           height: 180.0,
                           child: CarouselSlider.builder(
                             itemCount: carouselPetsRecordList.length,
                             itemBuilder: (context, carouselIndex, _) {
-                              final carouselPetsRecord =
-                                  carouselPetsRecordList[carouselIndex];
+                              final carouselPetsRecord = carouselPetsRecordList[carouselIndex];
                               return ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
                                 child: Image.network(
@@ -241,11 +237,9 @@ class _FeedCardWithCarouselWidgetState
                                 ),
                               );
                             },
-                            carouselController: _model.carouselController ??=
-                                CarouselController(),
+                            carouselController: _model.carouselController ??= CarouselController(),
                             options: CarouselOptions(
-                              initialPage:
-                                  min(1, carouselPetsRecordList.length - 1),
+                              initialPage: min(1, carouselPetsRecordList.length - 1),
                               viewportFraction: 0.5,
                               disableCenter: true,
                               enlargeCenterPage: true,
@@ -253,8 +247,7 @@ class _FeedCardWithCarouselWidgetState
                               enableInfiniteScroll: true,
                               scrollDirection: Axis.horizontal,
                               autoPlay: false,
-                              onPageChanged: (index, _) =>
-                                  _model.carouselCurrentIndex = index,
+                              onPageChanged: (index, _) => _model.carouselCurrentIndex = index,
                             ),
                           ),
                         );
