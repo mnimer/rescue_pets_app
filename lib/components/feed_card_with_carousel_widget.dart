@@ -1,7 +1,6 @@
-import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,7 +14,7 @@ class FeedCardWithCarouselWidget extends StatefulWidget {
     required this.pet,
   }) : super(key: key);
 
-  final PetsRecord? pet;
+  final PetsStruct? pet;
 
   @override
   _FeedCardWithCarouselWidgetState createState() =>
@@ -49,6 +48,8 @@ class _FeedCardWithCarouselWidgetState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
       child: Column(
@@ -86,7 +87,7 @@ class _FeedCardWithCarouselWidgetState
                     Text(
                       valueOrDefault<String>(
                         widget.pet?.name,
-                        'unknown',
+                        '\'\'',
                       ).maybeHandleOverflow(
                         maxChars: 20,
                         replacement: '…',
@@ -107,86 +108,18 @@ class _FeedCardWithCarouselWidgetState
               Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      context.pushNamed(
-                        'AdoptionPage',
-                        queryParameters: {
-                          'orgId': serializeParam(
-                            widget.pet?.orgID,
-                            ParamType.String,
-                          ),
-                          'pet': serializeParam(
-                            widget.pet,
-                            ParamType.Document,
-                          ),
-                        }.withoutNulls,
-                        extra: <String, dynamic>{
-                          'pet': widget.pet,
-                          kTransitionInfoKey: TransitionInfo(
-                            hasTransition: true,
-                            transitionType: PageTransitionType.leftToRight,
-                          ),
-                        },
-                      );
-                    },
-                    child: Text(
-                      '| How to Adopt',
-                      style: FlutterFlowTheme.of(context).bodyMedium,
-                    ),
+                  Text(
+                    'How to Adopt',
+                    style: FlutterFlowTheme.of(context).bodyMedium,
                   ),
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      context.pushNamed(
-                        'AdoptionPage',
-                        queryParameters: {
-                          'orgId': serializeParam(
-                            widget.pet?.orgID,
-                            ParamType.String,
-                          ),
-                          'pet': serializeParam(
-                            widget.pet,
-                            ParamType.Document,
-                          ),
-                        }.withoutNulls,
-                        extra: <String, dynamic>{
-                          'pet': widget.pet,
-                          kTransitionInfoKey: TransitionInfo(
-                            hasTransition: true,
-                            transitionType: PageTransitionType.leftToRight,
-                          ),
-                        },
-                      );
-                    },
-                    child: Icon(
-                      Icons.double_arrow,
-                      color: FlutterFlowTheme.of(context).secondaryText,
-                      size: 24.0,
-                    ),
+                  Icon(
+                    Icons.double_arrow,
+                    color: FlutterFlowTheme.of(context).secondaryText,
+                    size: 24.0,
                   ),
                 ],
               ),
             ],
-          ),
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-            child: SelectionArea(
-                child: Text(
-              valueOrDefault<String>(
-                widget.pet?.descriptionPlain,
-                '\'\'',
-              ),
-              maxLines: 2,
-              style: FlutterFlowTheme.of(context).bodyMedium,
-            )),
           ),
           Align(
             alignment: AlignmentDirectional(0.00, 0.00),
@@ -195,98 +128,7 @@ class _FeedCardWithCarouselWidgetState
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Builder(
-                    builder: (context) {
-                      if (valueOrDefault<bool>(
-                        widget.pet?.isDeleted,
-                        false,
-                      )) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            'https://picsum.photos/seed/61/600',
-                            width: 300.0,
-                            height: 200.0,
-                            fit: BoxFit.cover,
-                          ),
-                        );
-                      } else {
-                        return Container(
-                          width: MediaQuery.sizeOf(context).width * 0.9,
-                          height: 200.0,
-                          decoration: BoxDecoration(),
-                          child: FutureBuilder<List<PetsRecord>>(
-                            future: queryPetsRecordOnce(
-                              queryBuilder: (petsRecord) => petsRecord.where(
-                                'animalID',
-                                isEqualTo: widget.pet?.animalID,
-                              ),
-                              limit: 5,
-                            ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50.0,
-                                    height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        FlutterFlowTheme.of(context).primary,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }
-                              List<PetsRecord> carouselPetsRecordList =
-                                  snapshot.data!;
-                              return Container(
-                                width: double.infinity,
-                                height: 180.0,
-                                child: CarouselSlider.builder(
-                                  itemCount: carouselPetsRecordList.length,
-                                  itemBuilder: (context, carouselIndex, _) {
-                                    final carouselPetsRecord =
-                                        carouselPetsRecordList[carouselIndex];
-                                    return ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.network(
-                                        carouselPetsRecord.pictures
-                                            .take(5)
-                                            .toList()[carouselIndex]
-                                            .originalUrlCdnLink,
-                                        width: 300.0,
-                                        height: 200.0,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    );
-                                  },
-                                  carouselController:
-                                      _model.carouselController ??=
-                                          CarouselController(),
-                                  options: CarouselOptions(
-                                    initialPage: min(
-                                        1, carouselPetsRecordList.length - 1),
-                                    viewportFraction: 0.5,
-                                    disableCenter: true,
-                                    enlargeCenterPage: true,
-                                    enlargeFactor: 0.25,
-                                    enableInfiniteScroll: true,
-                                    scrollDirection: Axis.horizontal,
-                                    autoPlay: false,
-                                    onPageChanged: (index, _) =>
-                                        _model.carouselCurrentIndex = index,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                ],
+                children: [],
               ),
             ),
           ),
@@ -294,24 +136,23 @@ class _FeedCardWithCarouselWidgetState
             padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  '12 likes',
+                  '12 ',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Poppins',
                         color: FlutterFlowTheme.of(context).secondaryText,
                         fontSize: 12.0,
                       ),
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Text(
-                      '5 shares',
-                      style: FlutterFlowTheme.of(context).labelSmall,
-                    ),
-                  ],
+                Text(
+                  ' likes',
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        fontFamily: 'Poppins',
+                        color: FlutterFlowTheme.of(context).secondaryText,
+                        fontSize: 12.0,
+                      ),
                 ),
               ],
             ),
@@ -375,75 +216,31 @@ class _FeedCardWithCarouselWidgetState
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        context.pushNamed(
-                          'AdoptionPage',
-                          queryParameters: {
-                            'orgId': serializeParam(
-                              widget.pet?.orgID,
-                              ParamType.String,
-                            ),
-                            'pet': serializeParam(
-                              widget.pet,
-                              ParamType.Document,
-                            ),
-                          }.withoutNulls,
-                          extra: <String, dynamic>{
-                            'pet': widget.pet,
-                            kTransitionInfoKey: TransitionInfo(
-                              hasTransition: true,
-                              transitionType: PageTransitionType.leftToRight,
-                            ),
-                          },
-                        );
-                      },
-                      child: Icon(
-                        Icons.double_arrow_outlined,
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                        size: 18.0,
-                      ),
+                    Icon(
+                      Icons.double_arrow_outlined,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 18.0,
                     ),
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        context.pushNamed(
-                          'AdoptionPage',
-                          queryParameters: {
-                            'orgId': serializeParam(
-                              widget.pet?.orgID,
-                              ParamType.String,
-                            ),
-                            'pet': serializeParam(
-                              widget.pet,
-                              ParamType.Document,
-                            ),
-                          }.withoutNulls,
-                          extra: <String, dynamic>{
-                            'pet': widget.pet,
-                            kTransitionInfoKey: TransitionInfo(
-                              hasTransition: true,
-                              transitionType: PageTransitionType.leftToRight,
-                            ),
-                          },
-                        );
-                      },
-                      child: Text(
-                        'Adopt',
-                        style: FlutterFlowTheme.of(context).labelSmall,
-                      ),
+                    Text(
+                      'Adopt',
+                      style: FlutterFlowTheme.of(context).labelSmall,
                     ),
                   ],
                 ),
               ),
             ],
+          ),
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+            child: SelectionArea(
+                child: Text(
+              valueOrDefault<String>(
+                widget.pet?.description,
+                '\'\'',
+              ),
+              maxLines: 2,
+              style: FlutterFlowTheme.of(context).bodyMedium,
+            )),
           ),
         ],
       ),

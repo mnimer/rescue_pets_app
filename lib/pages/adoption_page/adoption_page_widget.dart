@@ -39,6 +39,8 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
     super.initState();
     _model = createModel(context, () => AdoptionPageModel());
 
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'AdoptionPage'});
     _model.tabBarController = TabController(
       vsync: this,
       length: 3,
@@ -64,6 +66,8 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
         ),
       );
     }
+
+    context.watch<FFAppState>();
 
     return FutureBuilder<List<OrgsRecord>>(
       future: queryOrgsRecordOnce(
@@ -121,6 +125,8 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                   size: 30.0,
                 ),
                 onPressed: () async {
+                  logFirebaseEvent('ADOPTION_arrow_back_rounded_ICN_ON_TAP');
+                  logFirebaseEvent('IconButton_navigate_back');
                   context.safePop();
                 },
               ),
@@ -297,6 +303,10 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                   highlightColor:
                                                       Colors.transparent,
                                                   onTap: () async {
+                                                    logFirebaseEvent(
+                                                        'ADOPTION_PAGE_PAGE_Text_e70ao3bs_ON_TAP');
+                                                    logFirebaseEvent(
+                                                        'Text_call_number');
                                                     await launchUrl(Uri(
                                                       scheme: 'tel',
                                                       path:
@@ -332,6 +342,10 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                   highlightColor:
                                                       Colors.transparent,
                                                   onTap: () async {
+                                                    logFirebaseEvent(
+                                                        'ADOPTION_PAGE_PAGE_Text_6zyc4e3v_ON_TAP');
+                                                    logFirebaseEvent(
+                                                        'Text_send_email');
                                                     await launchUrl(Uri(
                                                         scheme: 'mailto',
                                                         path:
@@ -380,6 +394,10 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                   highlightColor:
                                                       Colors.transparent,
                                                   onTap: () async {
+                                                    logFirebaseEvent(
+                                                        'ADOPTION_PAGE_PAGE_Text_m0lfhdh1_ON_TAP');
+                                                    logFirebaseEvent(
+                                                        'Text_launch_u_r_l');
                                                     await launchURL(
                                                         adoptionPageOrgsRecord!
                                                             .orgurl);
@@ -469,10 +487,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                       Align(
                         alignment: AlignmentDirectional(-1.00, 0.00),
                         child: Text(
-                          valueOrDefault<String>(
-                            widget.pet?.name,
-                            '\'\'',
-                          ),
+                          'Hello World',
                           style: FlutterFlowTheme.of(context).bodyMedium,
                         ),
                       ),
@@ -618,6 +633,10 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                     highlightColor:
                                                         Colors.transparent,
                                                     onTap: () async {
+                                                      logFirebaseEvent(
+                                                          'ADOPTION_PAGE_PAGE_Image_x94w1t9b_ON_TAP');
+                                                      logFirebaseEvent(
+                                                          'Image_expand_image');
                                                       await Navigator.push(
                                                         context,
                                                         PageTransition(

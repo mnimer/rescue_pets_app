@@ -1,4 +1,4 @@
-import '/backend/backend.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/components/empty_search_results_message_widget.dart';
 import '/components/feed_card_with_carousel_widget.dart';
 import '/components/search_and_sort_bar_widget.dart';
@@ -6,10 +6,14 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
+import '/flutter_flow/permissions_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'feed_model.dart';
 export 'feed_model.dart';
@@ -31,11 +35,26 @@ class _FeedWidgetState extends State<FeedWidget> {
   late FeedModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  LatLng? currentUserLocationValue;
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => FeedModel());
+
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Feed'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('FEED_PAGE_Feed_ON_INIT_STATE');
+      currentUserLocationValue =
+          await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
+      logFirebaseEvent('Feed_request_permissions');
+      await requestPermission(locationPermission);
+      logFirebaseEvent('Feed_update_app_state');
+      setState(() {
+        FFAppState().userLocation = currentUserLocationValue;
+      });
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -58,6 +77,8 @@ class _FeedWidgetState extends State<FeedWidget> {
       );
     }
 
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -78,8 +99,8 @@ class _FeedWidgetState extends State<FeedWidget> {
               color: Colors.white,
               size: 30.0,
             ),
-            onPressed: () async {
-              context.pushNamed('Home');
+            onPressed: () {
+              print('IconButton pressed ...');
             },
           ),
           title: Text(
@@ -116,29 +137,40 @@ class _FeedWidgetState extends State<FeedWidget> {
                       ),
                     ),
                   ),
-                  FutureBuilder<List<PetsRecord>>(
-                    future: (_model.firestoreRequestCompleter ??=
-                            Completer<List<PetsRecord>>()
-                              ..complete(queryPetsRecordOnce(
-                                queryBuilder: (petsRecord) => petsRecord
-                                    .where(
-                                      '_isDeleted',
-                                      isEqualTo: false,
-                                    )
-                                    .where(
-                                      'species',
-                                      isEqualTo: widget.species != ''
-                                          ? widget.species
-                                          : null,
-                                    )
-                                    .orderBy('_lastUpdated', descending: true),
-                                limit: 25,
-                              )))
-                        .future,
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
+                  RefreshIndicator(
+                    onRefresh: () async {
+                      logFirebaseEvent(
+                          'FEED_ListView_pnww02dr_ON_PULL_TO_REFRES');
+                      logFirebaseEvent('ListView_refresh_database_request');
+                      setState(
+                          () => _model.listViewPagingController?.refresh());
+                      await _model.waitForOnePageForListView();
+                    },
+                    child: PagedListView<ApiPagingParams, dynamic>(
+                      pagingController: _model.setListViewController(
+                        (nextPageMarker) => PetSearchCall.call(
+                          searchBreed: FFAppState().searchBreed,
+                          searchDogs: FFAppState().searchDogs,
+                          searchCats: FFAppState().searchCats,
+                          userLocationList:
+                              functions.splitLatLng(FFAppState().userLocation),
+                          next: nextPageMarker.nextPageNumber,
+                          last: getJsonField(
+                            (nextPageMarker.lastResponse ??
+                                    ApiCallResponse({}, {}, 200))
+                                .jsonBody,
+                            r'''$.animalID''',
+                          ).toString(),
+                          loadedItems: nextPageMarker.numItems,
+                        ),
+                      ),
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      reverse: false,
+                      scrollDirection: Axis.vertical,
+                      builderDelegate: PagedChildBuilderDelegate<dynamic>(
+                        // Customize what your widget looks like when it's loading the first page.
+                        firstPageProgressIndicatorBuilder: (_) => Center(
                           child: SizedBox(
                             width: 50.0,
                             height: 50.0,
@@ -148,41 +180,57 @@ class _FeedWidgetState extends State<FeedWidget> {
                               ),
                             ),
                           ),
-                        );
-                      }
-                      List<PetsRecord> listViewPetsRecordList = snapshot.data!;
-                      if (listViewPetsRecordList.isEmpty) {
-                        return EmptySearchResultsMessageWidget(
-                          species: widget.species,
-                        );
-                      }
-                      return RefreshIndicator(
-                        onRefresh: () async {
-                          setState(
-                              () => _model.firestoreRequestCompleter = null);
-                          await _model.waitForFirestoreRequestCompleted();
-                        },
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: listViewPetsRecordList.length,
-                          itemBuilder: (context, listViewIndex) {
-                            final listViewPetsRecord =
-                                listViewPetsRecordList[listViewIndex];
-                            return Container(
-                              height: 450.0,
-                              decoration: BoxDecoration(),
-                              child: FeedCardWithCarouselWidget(
-                                key: Key(
-                                    'Keyguj_${listViewIndex}_of_${listViewPetsRecordList.length}'),
-                                pet: listViewPetsRecord,
-                              ),
-                            );
-                          },
                         ),
-                      );
-                    },
+                        // Customize what your widget looks like when it's loading another page.
+                        newPageProgressIndicatorBuilder: (_) => Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                FlutterFlowTheme.of(context).primary,
+                              ),
+                            ),
+                          ),
+                        ),
+                        noItemsFoundIndicatorBuilder: (_) =>
+                            EmptySearchResultsMessageWidget(
+                          species: widget.species,
+                        ),
+                        itemBuilder: (context, _, petListIndex) {
+                          final petListItem = _model.listViewPagingController!
+                              .itemList![petListIndex];
+                          return Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 16.0),
+                            child: Material(
+                              color: Colors.transparent,
+                              elevation: 1.0,
+                              child: Container(
+                                height: 450.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: FeedCardWithCarouselWidget(
+                                        key: Key(
+                                            'Keyl07_${petListIndex}_of_${_model.listViewPagingController!.itemList!.length}'),
+                                        pet: functions
+                                            .createPetFromJson(petListItem)!,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 ],
               ),

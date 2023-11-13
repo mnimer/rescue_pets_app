@@ -38,12 +38,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) => NavBarPage(),
+      errorBuilder: (context, state) => FeedWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => NavBarPage(),
+          builder: (context, _) => FeedWidget(),
           routes: [
             FFRoute(
               name: 'AdoptionPage',
@@ -57,40 +57,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'LoginPage',
-              path: 'loginPage',
-              builder: (context, params) => LoginPageWidget(),
-            ),
-            FFRoute(
-              name: 'Home',
-              path: 'home',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Home')
-                  : HomeWidget(),
-            ),
-            FFRoute(
               name: 'Feed',
               path: 'feed',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Feed')
-                  : FeedWidget(
-                      species: params.getParam('species', ParamType.String),
-                    ),
-            ),
-            FFRoute(
-              name: 'Favorites',
-              path: 'favorites',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Favorites')
-                  : FavoritesWidget(
-                      animalType:
-                          params.getParam('animalType', ParamType.String),
-                    ),
-            ),
-            FFRoute(
-              name: 'testPage',
-              path: 'testPage',
-              builder: (context, params) => TestPageWidget(),
+              builder: (context, params) => FeedWidget(
+                species: params.getParam('species', ParamType.String),
+              ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
