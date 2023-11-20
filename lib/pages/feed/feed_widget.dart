@@ -5,14 +5,10 @@ import '/components/search_and_sort_bar_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/custom_functions.dart' as functions;
 import '/flutter_flow/permissions_util.dart';
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'feed_model.dart';
@@ -20,10 +16,9 @@ export 'feed_model.dart';
 
 class FeedWidget extends StatefulWidget {
   const FeedWidget({
-    Key? key,
+    super.key,
     String? species,
-  })  : this.species = species ?? 'cat',
-        super(key: key);
+  })  : species = species ?? 'cat';
 
   final String species;
 
@@ -47,7 +42,7 @@ class _FeedWidgetState extends State<FeedWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('FEED_PAGE_Feed_ON_INIT_STATE');
       currentUserLocationValue =
-          await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
+          await getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0));
       logFirebaseEvent('Feed_request_permissions');
       await requestPermission(locationPermission);
       logFirebaseEvent('Feed_update_app_state');
@@ -94,7 +89,7 @@ class _FeedWidgetState extends State<FeedWidget> {
             borderRadius: 30.0,
             borderWidth: 1.0,
             buttonSize: 60.0,
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
               size: 30.0,
@@ -111,20 +106,20 @@ class _FeedWidgetState extends State<FeedWidget> {
                   fontSize: 22.0,
                 ),
           ),
-          actions: [],
+          actions: const [],
           centerTitle: true,
           elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Align(
-                    alignment: AlignmentDirectional(0.00, 0.00),
+                    alignment: const AlignmentDirectional(0.00, 0.00),
                     child: Container(
                       width: MediaQuery.sizeOf(context).width * 1.0,
                       decoration: BoxDecoration(
@@ -133,35 +128,31 @@ class _FeedWidgetState extends State<FeedWidget> {
                       child: wrapWithModel(
                         model: _model.searchAndSortBarModel,
                         updateCallback: () => setState(() {}),
-                        child: SearchAndSortBarWidget(),
+                        child: const SearchAndSortBarWidget(),
                       ),
                     ),
                   ),
-                  RefreshIndicator(
-                    onRefresh: () async {
-                      logFirebaseEvent(
-                          'FEED_ListView_pnww02dr_ON_PULL_TO_REFRES');
-                      logFirebaseEvent('ListView_refresh_database_request');
-                      setState(
-                          () => _model.listViewPagingController?.refresh());
-                      await _model.waitForOnePageForListView();
-                    },
+                  Container(
+                    width: MediaQuery.sizeOf(context).width * 1.0,
+                    height: MediaQuery.sizeOf(context).height * 1.0,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                    ),
                     child: PagedListView<ApiPagingParams, dynamic>(
                       pagingController: _model.setListViewController(
                         (nextPageMarker) => PetSearchCall.call(
                           searchBreed: FFAppState().searchBreed,
                           searchDogs: FFAppState().searchDogs,
                           searchCats: FFAppState().searchCats,
-                          userLocationList:
-                              functions.splitLatLng(FFAppState().userLocation),
                           next: nextPageMarker.nextPageNumber,
                           last: getJsonField(
                             (nextPageMarker.lastResponse ??
-                                    ApiCallResponse({}, {}, 200))
+                                    const ApiCallResponse({}, {}, 200))
                                 .jsonBody,
                             r'''$.animalID''',
                           ).toString(),
                           loadedItems: nextPageMarker.numItems,
+                          page: nextPageMarker.nextPageNumber,
                         ),
                       ),
                       padding: EdgeInsets.zero,
@@ -171,24 +162,32 @@ class _FeedWidgetState extends State<FeedWidget> {
                       builderDelegate: PagedChildBuilderDelegate<dynamic>(
                         // Customize what your widget looks like when it's loading the first page.
                         firstPageProgressIndicatorBuilder: (_) => Center(
-                          child: SizedBox(
-                            width: 50.0,
-                            height: 50.0,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                FlutterFlowTheme.of(context).primary,
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 48.0, 0.0, 0.0),
+                            child: SizedBox(
+                              width: 50.0,
+                              height: 50.0,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  FlutterFlowTheme.of(context).primary,
+                                ),
                               ),
                             ),
                           ),
                         ),
                         // Customize what your widget looks like when it's loading another page.
                         newPageProgressIndicatorBuilder: (_) => Center(
-                          child: SizedBox(
-                            width: 50.0,
-                            height: 50.0,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                FlutterFlowTheme.of(context).primary,
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 48.0, 0.0, 0.0),
+                            child: SizedBox(
+                              width: 50.0,
+                              height: 50.0,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  FlutterFlowTheme.of(context).primary,
+                                ),
                               ),
                             ),
                           ),
@@ -197,31 +196,46 @@ class _FeedWidgetState extends State<FeedWidget> {
                             EmptySearchResultsMessageWidget(
                           species: widget.species,
                         ),
-                        itemBuilder: (context, _, petListIndex) {
-                          final petListItem = _model.listViewPagingController!
-                              .itemList![petListIndex];
-                          return Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 16.0),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 1.0,
+                        itemBuilder: (context, _, feedListChildrenIndex) {
+                          final feedListChildrenItem = _model
+                              .listViewPagingController!
+                              .itemList![feedListChildrenIndex];
+                          return Material(
+                            color: Colors.transparent,
+                            elevation: 0.0,
+                            child: ClipRRect(
                               child: Container(
-                                height: 450.0,
+                                height: 420.0,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
+                                      .primaryBackground,
                                 ),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    Expanded(
-                                      child: FeedCardWithCarouselWidget(
-                                        key: Key(
-                                            'Keyl07_${petListIndex}_of_${_model.listViewPagingController!.itemList!.length}'),
-                                        pet: functions
-                                            .createPetFromJson(petListItem)!,
+                                    Align(
+                                      alignment:
+                                          const AlignmentDirectional(0.00, 0.00),
+                                      child: wrapWithModel(
+                                        model: _model.feedCardWithCarouselModels
+                                            .getModel(
+                                          feedListChildrenItem.animalID,
+                                          feedListChildrenIndex,
+                                        ),
+                                        updateCallback: () => setState(() {}),
+                                        updateOnChange: true,
+                                        child: FeedCardWithCarouselWidget(
+                                          key: Key(
+                                            'Key7hi_${feedListChildrenItem.animalID}',
+                                          ),
+                                          pet: feedListChildrenItem,
+                                        ),
                                       ),
+                                    ),
+                                    Divider(
+                                      thickness: 1.0,
+                                      color:
+                                          FlutterFlowTheme.of(context).accent4,
                                     ),
                                   ],
                                 ),

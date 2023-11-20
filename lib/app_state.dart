@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
-import 'backend/api_requests/api_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
@@ -43,42 +41,42 @@ class FFAppState extends ChangeNotifier {
 
   String _searchBreed = '';
   String get searchBreed => _searchBreed;
-  set searchBreed(String _value) {
-    _searchBreed = _value;
-    prefs.setString('ff_searchBreed', _value);
+  set searchBreed(String value) {
+    _searchBreed = value;
+    prefs.setString('ff_searchBreed', value);
   }
 
   bool _searchDogs = true;
   bool get searchDogs => _searchDogs;
-  set searchDogs(bool _value) {
-    _searchDogs = _value;
-    prefs.setBool('ff_searchDogs', _value);
+  set searchDogs(bool value) {
+    _searchDogs = value;
+    prefs.setBool('ff_searchDogs', value);
   }
 
-  bool _searchCats = false;
+  bool _searchCats = true;
   bool get searchCats => _searchCats;
-  set searchCats(bool _value) {
-    _searchCats = _value;
-    prefs.setBool('ff_searchCats', _value);
+  set searchCats(bool value) {
+    _searchCats = value;
+    prefs.setBool('ff_searchCats', value);
   }
 
   int _searchDistance = 50;
   int get searchDistance => _searchDistance;
-  set searchDistance(int _value) {
-    _searchDistance = _value;
-    prefs.setInt('ff_searchDistance', _value);
+  set searchDistance(int value) {
+    _searchDistance = value;
+    prefs.setInt('ff_searchDistance', value);
   }
 
   LatLng? _userLocation;
   LatLng? get userLocation => _userLocation;
-  set userLocation(LatLng? _value) {
-    _userLocation = _value;
+  set userLocation(LatLng? value) {
+    _userLocation = value;
   }
 
   bool _searchFavorites = false;
   bool get searchFavorites => _searchFavorites;
-  set searchFavorites(bool _value) {
-    _searchFavorites = _value;
+  set searchFavorites(bool value) {
+    _searchFavorites = value;
   }
 }
 

@@ -4,11 +4,8 @@ import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'adoption_page_model.dart';
@@ -16,10 +13,10 @@ export 'adoption_page_model.dart';
 
 class AdoptionPageWidget extends StatefulWidget {
   const AdoptionPageWidget({
-    Key? key,
+    super.key,
     required this.orgId,
     required this.pet,
-  }) : super(key: key);
+  });
 
   final String? orgId;
   final PetsRecord? pet;
@@ -119,7 +116,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                 borderRadius: 30.0,
                 borderWidth: 1.0,
                 buttonSize: 60.0,
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back_rounded,
                   color: Colors.white,
                   size: 30.0,
@@ -138,14 +135,14 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                       fontSize: 22.0,
                     ),
               ),
-              actions: [],
+              actions: const [],
               centerTitle: false,
               elevation: 2.0,
             ),
             body: SafeArea(
               top: true,
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
@@ -153,7 +150,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                     children: [
                       Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+                            const EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -161,7 +158,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                           children: [
                             Expanded(
                               child: Align(
-                                alignment: AlignmentDirectional(-0.95, 0.95),
+                                alignment: const AlignmentDirectional(-0.95, 0.95),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -190,10 +187,10 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                             width: MediaQuery.sizeOf(context)
                                                     .width *
                                                 0.501,
-                                            constraints: BoxConstraints(
+                                            constraints: const BoxConstraints(
                                               maxWidth: 240.0,
                                             ),
-                                            decoration: BoxDecoration(),
+                                            decoration: const BoxDecoration(),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               crossAxisAlignment:
@@ -201,8 +198,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                               children: [
                                                 SelectionArea(
                                                     child: Text(
-                                                  adoptionPageOrgsRecord!
-                                                      .address,
+                                                  adoptionPageOrgsRecord.address,
                                                   textAlign: TextAlign.start,
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -222,8 +218,8 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                         child: Text(
                                                       valueOrDefault<String>(
                                                         adoptionPageOrgsRecord
-                                                            ?.city,
-                                                        '\"\"',
+                                                            .city,
+                                                        '""',
                                                       ),
                                                       style: FlutterFlowTheme
                                                               .of(context)
@@ -240,8 +236,8 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                         child: Text(
                                                       valueOrDefault<String>(
                                                         adoptionPageOrgsRecord
-                                                            ?.state,
-                                                        '\"\"',
+                                                            .state,
+                                                        '""',
                                                       ),
                                                       style: FlutterFlowTheme
                                                               .of(context)
@@ -258,8 +254,8 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                         child: Text(
                                                       valueOrDefault<String>(
                                                         adoptionPageOrgsRecord
-                                                            ?.zip,
-                                                        '\"\"',
+                                                            .zip,
+                                                        '""',
                                                       ),
                                                       style: FlutterFlowTheme
                                                               .of(context)
@@ -275,13 +271,12 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                   ],
                                                 ),
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
+                                                  padding: const EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 0.0, 0.0, 8.0),
                                                   child: SelectionArea(
                                                       child: Text(
-                                                    adoptionPageOrgsRecord!
-                                                        .country,
+                                                    adoptionPageOrgsRecord.country,
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .headlineMedium
@@ -310,13 +305,11 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                     await launchUrl(Uri(
                                                       scheme: 'tel',
                                                       path:
-                                                          adoptionPageOrgsRecord!
-                                                              .phone,
+                                                          adoptionPageOrgsRecord.phone,
                                                     ));
                                                   },
                                                   child: Text(
-                                                    adoptionPageOrgsRecord!
-                                                        .phone,
+                                                    adoptionPageOrgsRecord.phone,
                                                     textAlign: TextAlign.center,
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -349,8 +342,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                     await launchUrl(Uri(
                                                         scheme: 'mailto',
                                                         path:
-                                                            adoptionPageOrgsRecord!
-                                                                .email,
+                                                            adoptionPageOrgsRecord.email,
                                                         query: {
                                                           'subject':
                                                               'Adoption Question',
@@ -364,8 +356,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                             .join('&')));
                                                   },
                                                   child: Text(
-                                                    adoptionPageOrgsRecord!
-                                                        .email
+                                                    adoptionPageOrgsRecord.email
                                                         .maybeHandleOverflow(
                                                       maxChars: 25,
                                                       replacement: '…',
@@ -399,12 +390,10 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                     logFirebaseEvent(
                                                         'Text_launch_u_r_l');
                                                     await launchURL(
-                                                        adoptionPageOrgsRecord!
-                                                            .orgurl);
+                                                        adoptionPageOrgsRecord.orgurl);
                                                   },
                                                   child: Text(
-                                                    adoptionPageOrgsRecord!
-                                                        .orgurl
+                                                    adoptionPageOrgsRecord.orgurl
                                                         .maybeHandleOverflow(
                                                       maxChars: 25,
                                                       replacement: '…',
@@ -435,7 +424,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                     .width *
                                                 0.39,
                                             height: 150.0,
-                                            constraints: BoxConstraints(
+                                            constraints: const BoxConstraints(
                                               minWidth: 150.0,
                                               maxWidth: 200.0,
                                             ),
@@ -451,7 +440,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                   .googleMapsCenter = latLng,
                                               initialLocation: _model
                                                       .googleMapsCenter ??=
-                                                  LatLng(13.106061, -59.613158),
+                                                  const LatLng(13.106061, -59.613158),
                                               markerColor:
                                                   GoogleMarkerColor.violet,
                                               mapType: MapType.normal,
@@ -477,7 +466,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                           ],
                         ),
                       ),
-                      Column(
+                      const Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -485,14 +474,14 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                         ],
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-1.00, 0.00),
+                        alignment: const AlignmentDirectional(-1.00, 0.00),
                         child: Text(
                           'Hello World',
                           style: FlutterFlowTheme.of(context).bodyMedium,
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-1.00, 0.00),
+                        alignment: const AlignmentDirectional(-1.00, 0.00),
                         child: SelectionArea(
                             child: Text(
                           valueOrDefault<String>(
@@ -510,7 +499,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                       ),
                       Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
                         child: Container(
                           width: MediaQuery.sizeOf(context).width * 1.0,
                           height: MediaQuery.sizeOf(context).height * 1.0,
@@ -521,7 +510,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                           child: Column(
                             children: [
                               Align(
-                                alignment: Alignment(0.0, 0),
+                                alignment: const Alignment(0.0, 0),
                                 child: TabBar(
                                   labelColor:
                                       FlutterFlowTheme.of(context).primaryText,
@@ -535,12 +524,12 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.w600,
                                       ),
-                                  unselectedLabelStyle: TextStyle(),
+                                  unselectedLabelStyle: const TextStyle(),
                                   indicatorColor:
                                       FlutterFlowTheme.of(context).primary,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       4.0, 4.0, 4.0, 4.0),
-                                  tabs: [
+                                  tabs: const [
                                     Tab(
                                       text: 'Images',
                                     ),
@@ -559,7 +548,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                   controller: _model.tabBarController,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           0.0, 16.0, 0.0, 0.0),
                                       child: FutureBuilder<List<PetsRecord>>(
                                         future: queryPetsRecordOnce(
@@ -600,17 +589,17 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                             builder: (context) {
                                               final gridImages = (gridViewPetsRecord
                                                           ?.pictures
-                                                          ?.map((e) => e
+                                                          .map((e) => e
                                                               .originalUrlCdnLink)
                                                           .toList()
-                                                          ?.toList() ??
+                                                          .toList() ??
                                                       [])
                                                   .take(20)
                                                   .toList();
                                               return GridView.builder(
                                                 padding: EdgeInsets.zero,
                                                 gridDelegate:
-                                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                                    const SliverGridDelegateWithFixedCrossAxisCount(
                                                   crossAxisCount: 3,
                                                   crossAxisSpacing: 10.0,
                                                   mainAxisSpacing: 10.0,
@@ -701,7 +690,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           0.0, 16.0, 0.0, 0.0),
                                       child: SingleChildScrollView(
                                         child: Column(
@@ -710,7 +699,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                               CrossAxisAlignment.start,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       16.0, 0.0, 0.0, 0.0),
                                               child: Row(
@@ -724,11 +713,11 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                     children: [
                                                       Align(
                                                         alignment:
-                                                            AlignmentDirectional(
+                                                            const AlignmentDirectional(
                                                                 -1.00, 0.00),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
+                                                              const EdgeInsetsDirectional
                                                                   .fromSTEB(
                                                                       0.0,
                                                                       0.0,
@@ -744,11 +733,11 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                       ),
                                                       Align(
                                                         alignment:
-                                                            AlignmentDirectional(
+                                                            const AlignmentDirectional(
                                                                 -1.00, 0.00),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
+                                                              const EdgeInsetsDirectional
                                                                   .fromSTEB(
                                                                       0.0,
                                                                       0.0,
@@ -764,11 +753,11 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                       ),
                                                       Align(
                                                         alignment:
-                                                            AlignmentDirectional(
+                                                            const AlignmentDirectional(
                                                                 -1.00, 0.00),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
+                                                              const EdgeInsetsDirectional
                                                                   .fromSTEB(
                                                                       0.0,
                                                                       0.0,
@@ -784,11 +773,11 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                       ),
                                                       Align(
                                                         alignment:
-                                                            AlignmentDirectional(
+                                                            const AlignmentDirectional(
                                                                 -1.00, 0.00),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsetsDirectional
+                                                              const EdgeInsetsDirectional
                                                                   .fromSTEB(
                                                                       0.0,
                                                                       0.0,
@@ -874,10 +863,10 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                               ),
                                             ),
                                             Align(
-                                              alignment: AlignmentDirectional(
+                                              alignment: const AlignmentDirectional(
                                                   -1.00, 0.00),
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
+                                                padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         0.0, 36.0, 0.0, 0.0),
                                                 child: Text(
@@ -909,7 +898,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                       children: [
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   16.0, 0.0, 16.0, 24.0),
                                           child: SelectionArea(
                                               child: Text(
@@ -924,7 +913,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                         ),
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   16.0, 0.0, 0.0, 24.0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
@@ -946,12 +935,12 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium,
                                               ),
-                                            ].divide(SizedBox(width: 8.0)),
+                                            ].divide(const SizedBox(width: 8.0)),
                                           ),
                                         ),
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   16.0, 0.0, 16.0, 0.0),
                                           child: SelectionArea(
                                               child: Text(

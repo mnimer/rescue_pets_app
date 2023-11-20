@@ -1,7 +1,6 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
-import '../../flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
@@ -17,24 +16,26 @@ class PetSearchCall {
     int? next,
     String? last = '',
     int? loadedItems,
-    int? limit = 10,
-  }) {
+    int? limit = 100,
+    int? page = 1,
+  }) async {
     final userLocation = _serializeList(userLocationList);
 
     final ffApiRequestBody = '''
 {
-  "searchBreed": "${searchBreed}",
-  "searchDogs": ${searchDogs},
-  "searchCats": ${searchCats},
-  "userLocation": ${userLocation},
-  "_next": ${next},
-  "_last": "${last}",
-  "_loadedItems": ${loadedItems},
-  "_limit": ${limit}
+  "searchBreed": "$searchBreed",
+  "searchDogs": $searchDogs,
+  "searchCats": $searchCats,
+  "userLocation": $userLocation,
+  "_next": $next,
+  "_last": "$last",
+  "_loadedItems": $loadedItems,
+  "_limit": $limit
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'petSearch',
-      apiUrl: 'https://petsearch-3pg22sntiq-uc.a.run.app/',
+      apiUrl:
+          'https://petsearch-3pg22sntiq-uc.a.run.app/?next=$next&last=$last&loadedItems=$loadedItems&page=$page',
       callType: ApiCallType.POST,
       headers: {},
       params: {},

@@ -1,18 +1,19 @@
 import '/backend/schema/structs/index.dart';
+import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'feed_card_with_carousel_model.dart';
 export 'feed_card_with_carousel_model.dart';
 
 class FeedCardWithCarouselWidget extends StatefulWidget {
   const FeedCardWithCarouselWidget({
-    Key? key,
+    super.key,
     required this.pet,
-  }) : super(key: key);
+  });
 
   final PetsStruct? pet;
 
@@ -51,7 +52,7 @@ class _FeedCardWithCarouselWidgetState
     context.watch<FFAppState>();
 
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
+      padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,18 +63,18 @@ class _FeedCardWithCarouselWidgetState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Align(
-                alignment: AlignmentDirectional(0.00, 0.00),
+                alignment: const AlignmentDirectional(0.00, 0.00),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 6.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 6.0, 0.0),
                   child: Container(
                     width: 45.0,
                     height: 45.0,
                     clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
                     child: Image.network(
-                      'https://images.unsplash.com/photo-1601979031925-424e53b6caaa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwyfHxwdXBweXxlbnwwfHx8fDE2OTY4MjIwNzN8MA&ixlib=rb-4.0.3&q=80&w=400',
+                      widget.pet!.pictures.first.originalUrlCdnLink,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -122,18 +123,156 @@ class _FeedCardWithCarouselWidgetState
             ],
           ),
           Align(
-            alignment: AlignmentDirectional(0.00, 0.00),
+            alignment: const AlignmentDirectional(0.00, 0.00),
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 16.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 16.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [],
+                children: [
+                  Expanded(
+                    child: Builder(
+                      builder: (context) {
+                        if (widget.pet!.pictures.length > 1) {
+                          return Builder(
+                            builder: (context) {
+                              final petImageCarousel =
+                                  widget.pet?.pictures.toList() ?? [];
+                              return SizedBox(
+                                width: double.infinity,
+                                height: 180.0,
+                                child: CarouselSlider.builder(
+                                  itemCount: petImageCarousel.length,
+                                  itemBuilder:
+                                      (context, petImageCarouselIndex, _) {
+                                    final petImageCarouselItem =
+                                        petImageCarousel[petImageCarouselIndex];
+                                    return InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        logFirebaseEvent(
+                                            'FEED_CARD_WITH_CAROUSEL_Image_1uowbqng_O');
+                                        logFirebaseEvent('Image_expand_image');
+                                        await Navigator.push(
+                                          context,
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            child: FlutterFlowExpandedImageView(
+                                              image: CachedNetworkImage(
+                                                fadeInDuration:
+                                                    const Duration(milliseconds: 500),
+                                                fadeOutDuration:
+                                                    const Duration(milliseconds: 500),
+                                                imageUrl: petImageCarouselItem
+                                                    .originalUrlCdnLink,
+                                                fit: BoxFit.contain,
+                                              ),
+                                              allowRotation: false,
+                                              tag: petImageCarouselItem
+                                                  .originalUrlCdnLink,
+                                              useHeroAnimation: true,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Hero(
+                                        tag: petImageCarouselItem
+                                            .originalUrlCdnLink,
+                                        transitionOnUserGestures: true,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          child: CachedNetworkImage(
+                                            fadeInDuration:
+                                                const Duration(milliseconds: 500),
+                                            fadeOutDuration:
+                                                const Duration(milliseconds: 500),
+                                            imageUrl: petImageCarouselItem
+                                                .originalUrlCdnLink,
+                                            width: 300.0,
+                                            height: 200.0,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  carouselController:
+                                      _model.carouselController ??=
+                                          CarouselController(),
+                                  options: CarouselOptions(
+                                    initialPage:
+                                        min(1, petImageCarousel.length - 1),
+                                    viewportFraction: 0.5,
+                                    disableCenter: true,
+                                    enlargeCenterPage: true,
+                                    enlargeFactor: 0.25,
+                                    enableInfiniteScroll: true,
+                                    scrollDirection: Axis.horizontal,
+                                    autoPlay: false,
+                                    onPageChanged: (index, _) =>
+                                        _model.carouselCurrentIndex = index,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        } else {
+                          return InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              logFirebaseEvent(
+                                  'FEED_CARD_WITH_CAROUSEL_Image_47uke5fx_O');
+                              logFirebaseEvent('Image_expand_image');
+                              await Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: FlutterFlowExpandedImageView(
+                                    image: Image.network(
+                                      widget.pet!.pictures.first
+                                          .originalUrlCdnLink,
+                                      fit: BoxFit.contain,
+                                    ),
+                                    allowRotation: false,
+                                    tag: widget
+                                        .pet!.pictures.first.originalUrlCdnLink,
+                                    useHeroAnimation: true,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Hero(
+                              tag:
+                                  widget.pet!.pictures.first.originalUrlCdnLink,
+                              transitionOnUserGestures: true,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image.network(
+                                  widget.pet!.pictures.first.originalUrlCdnLink,
+                                  width: 300.0,
+                                  height: 200.0,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -229,18 +368,6 @@ class _FeedCardWithCarouselWidgetState
                 ),
               ),
             ],
-          ),
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-            child: SelectionArea(
-                child: Text(
-              valueOrDefault<String>(
-                widget.pet?.description,
-                '\'\'',
-              ),
-              maxLines: 2,
-              style: FlutterFlowTheme.of(context).bodyMedium,
-            )),
           ),
         ],
       ),
