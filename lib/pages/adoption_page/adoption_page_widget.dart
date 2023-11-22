@@ -130,7 +130,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
               title: Text(
                 'Adoption Info',
                 style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Roboto',
                       color: Colors.white,
                       fontSize: 22.0,
                     ),
@@ -171,7 +171,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                       style: FlutterFlowTheme.of(context)
                                           .displaySmall
                                           .override(
-                                            fontFamily: 'Poppins',
+                                            fontFamily: 'Roboto',
                                             fontSize: 16.0,
                                           ),
                                     )),
@@ -204,7 +204,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                           context)
                                                       .headlineMedium
                                                       .override(
-                                                        fontFamily: 'Poppins',
+                                                        fontFamily: 'Roboto',
                                                         fontSize: 12.0,
                                                         fontWeight:
                                                             FontWeight.w500,
@@ -226,7 +226,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                           .headlineMedium
                                                           .override(
                                                             fontFamily:
-                                                                'Poppins',
+                                                                'Roboto',
                                                             fontSize: 12.0,
                                                             fontWeight:
                                                                 FontWeight.w500,
@@ -244,7 +244,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                           .headlineMedium
                                                           .override(
                                                             fontFamily:
-                                                                'Poppins',
+                                                                'Roboto',
                                                             fontSize: 12.0,
                                                             fontWeight:
                                                                 FontWeight.w500,
@@ -262,7 +262,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                           .headlineMedium
                                                           .override(
                                                             fontFamily:
-                                                                'Poppins',
+                                                                'Roboto',
                                                             fontSize: 12.0,
                                                             fontWeight:
                                                                 FontWeight.w500,
@@ -281,7 +281,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                             context)
                                                         .headlineMedium
                                                         .override(
-                                                          fontFamily: 'Poppins',
+                                                          fontFamily: 'Roboto',
                                                           fontSize: 12.0,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -315,7 +315,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                             context)
                                                         .titleMedium
                                                         .override(
-                                                          fontFamily: 'Poppins',
+                                                          fontFamily: 'Roboto',
                                                           fontSize: 12.0,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -365,7 +365,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                             context)
                                                         .titleSmall
                                                         .override(
-                                                          fontFamily: 'Poppins',
+                                                          fontFamily: 'Roboto',
                                                           fontSize: 12.0,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -402,7 +402,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                             context)
                                                         .titleSmall
                                                         .override(
-                                                          fontFamily: 'Poppins',
+                                                          fontFamily: 'Roboto',
                                                           fontSize: 12.0,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -491,7 +491,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                           maxLines: 8,
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Poppins',
+                                    fontFamily: 'Roboto',
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.normal,
                                   ),
@@ -520,7 +520,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                   labelStyle: FlutterFlowTheme.of(context)
                                       .titleMedium
                                       .override(
-                                        fontFamily: 'Poppins',
+                                        fontFamily: 'Roboto',
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -808,7 +808,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                                 .bodyMedium
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Poppins',
+                                                                      'Roboto',
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal,
@@ -822,7 +822,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                                 .bodyMedium
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Poppins',
+                                                                      'Roboto',
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal,
@@ -836,7 +836,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                                 .bodyMedium
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Poppins',
+                                                                      'Roboto',
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal,
@@ -851,7 +851,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                                 .bodyMedium
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Poppins',
+                                                                      'Roboto',
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal,
@@ -879,7 +879,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                                           context)
                                                       .bodyMedium
                                                       .override(
-                                                        fontFamily: 'Poppins',
+                                                        fontFamily: 'Roboto',
                                                         fontSize: 12.0,
                                                         fontWeight:
                                                             FontWeight.normal,
@@ -906,7 +906,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                             style: FlutterFlowTheme.of(context)
                                                 .bodySmall
                                                 .override(
-                                                  fontFamily: 'Poppins',
+                                                  fontFamily: 'Roboto',
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                           )),
@@ -948,7 +948,7 @@ class _AdoptionPageWidgetState extends State<AdoptionPageWidget>
                                             style: FlutterFlowTheme.of(context)
                                                 .bodySmall
                                                 .override(
-                                                  fontFamily: 'Poppins',
+                                                  fontFamily: 'Roboto',
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                           )),

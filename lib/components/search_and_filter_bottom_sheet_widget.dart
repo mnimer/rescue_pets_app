@@ -396,7 +396,7 @@ class _SearchAndFilterBottomSheetWidgetState
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Roboto',
                                 color: Colors.white,
                               ),
                       elevation: 2.0,

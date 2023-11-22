@@ -16,7 +16,7 @@ class PetSearchCall {
     int? next,
     String? last = '',
     int? loadedItems,
-    int? limit = 100,
+    int? limit = 10,
     int? page = 1,
   }) async {
     final userLocation = _serializeList(userLocationList);
@@ -35,7 +35,7 @@ class PetSearchCall {
     return ApiManager.instance.makeApiCall(
       callName: 'petSearch',
       apiUrl:
-          'https://petsearch-3pg22sntiq-uc.a.run.app/?next=$next&last=$last&loadedItems=$loadedItems&page=$page',
+          'https://petsearch-3pg22sntiq-uc.a.run.app/?next=$next&loadedItems=$loadedItems&page=$page',
       callType: ApiCallType.POST,
       headers: {},
       params: {},

@@ -101,7 +101,7 @@ class _FeedWidgetState extends State<FeedWidget> {
           title: Text(
             'Dogs / Puppies',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Roboto',
                   color: Colors.white,
                   fontSize: 22.0,
                 ),
@@ -134,9 +134,9 @@ class _FeedWidgetState extends State<FeedWidget> {
                   ),
                   Container(
                     width: MediaQuery.sizeOf(context).width * 1.0,
-                    height: MediaQuery.sizeOf(context).height * 1.0,
+                    height: MediaQuery.sizeOf(context).height * 0.99,
                     decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      color: FlutterFlowTheme.of(context).primaryBackground,
                     ),
                     child: PagedListView<ApiPagingParams, dynamic>(
                       pagingController: _model.setListViewController(
@@ -149,7 +149,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                             (nextPageMarker.lastResponse ??
                                     const ApiCallResponse({}, {}, 200))
                                 .jsonBody,
-                            r'''$.animalID''',
+                            r'''$.last''',
                           ).toString(),
                           loadedItems: nextPageMarker.numItems,
                           page: nextPageMarker.nextPageNumber,
@@ -205,7 +205,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                             elevation: 0.0,
                             child: ClipRRect(
                               child: Container(
-                                height: 420.0,
+                                height: 405.0,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .primaryBackground,
