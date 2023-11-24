@@ -1,30 +1,36 @@
+import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
+import '/components/login_and_signup_sheet_widget.dart';
+import '/components/web_share_sheet_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import 'feed_card_with_carousel_model.dart';
-export 'feed_card_with_carousel_model.dart';
+import 'package:share_plus/share_plus.dart';
+import 'feed_card_model.dart';
+export 'feed_card_model.dart';
 
-class FeedCardWithCarouselWidget extends StatefulWidget {
-  const FeedCardWithCarouselWidget({
-    super.key,
+class FeedCardWidget extends StatefulWidget {
+  const FeedCardWidget({
+    Key? key,
     required this.pet,
-  });
+  }) : super(key: key);
 
   final PetsStruct? pet;
 
   @override
-  _FeedCardWithCarouselWidgetState createState() =>
-      _FeedCardWithCarouselWidgetState();
+  _FeedCardWidgetState createState() => _FeedCardWidgetState();
 }
 
-class _FeedCardWithCarouselWidgetState
-    extends State<FeedCardWithCarouselWidget> {
-  late FeedCardWithCarouselModel _model;
+class _FeedCardWidgetState extends State<FeedCardWidget> {
+  late FeedCardModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -35,7 +41,7 @@ class _FeedCardWithCarouselWidgetState
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => FeedCardWithCarouselModel());
+    _model = createModel(context, () => FeedCardModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -56,7 +62,7 @@ class _FeedCardWithCarouselWidgetState
         color: FlutterFlowTheme.of(context).secondaryBackground,
       ),
       child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
+        padding: EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,14 +73,14 @@ class _FeedCardWithCarouselWidgetState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Align(
-                  alignment: const AlignmentDirectional(0.00, 0.00),
+                  alignment: AlignmentDirectional(0.00, 0.00),
                   child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 6.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 6.0, 0.0),
                     child: Container(
                       width: 45.0,
                       height: 45.0,
                       clipBehavior: Clip.antiAlias,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         shape: BoxShape.circle,
                       ),
                       child: Image.network(
@@ -138,9 +144,9 @@ class _FeedCardWithCarouselWidgetState
               ],
             ),
             Align(
-              alignment: const AlignmentDirectional(0.00, 0.00),
+              alignment: AlignmentDirectional(0.00, 0.00),
               child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 16.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 16.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -152,10 +158,25 @@ class _FeedCardWithCarouselWidgetState
                             return Builder(
                               builder: (context) {
                                 final petImageCarousel =
-                                    widget.pet?.pictures.toList() ?? [];
-                                return SizedBox(
+                                    widget.pet?.pictures?.toList() ?? [];
+                                return Container(
                                   width: double.infinity,
-                                  height: 180.0,
+                                  height: () {
+                                    if (MediaQuery.sizeOf(context).width <
+                                        kBreakpointSmall) {
+                                      return 280.0;
+                                    } else if (MediaQuery.sizeOf(context)
+                                            .width <
+                                        kBreakpointMedium) {
+                                      return 350.0;
+                                    } else if (MediaQuery.sizeOf(context)
+                                            .width <
+                                        kBreakpointLarge) {
+                                      return 500.0;
+                                    } else {
+                                      return 300.0;
+                                    }
+                                  }(),
                                   child: CarouselSlider.builder(
                                     itemCount: petImageCarousel.length,
                                     itemBuilder:
@@ -170,7 +191,7 @@ class _FeedCardWithCarouselWidgetState
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
                                           logFirebaseEvent(
-                                              'FEED_CARD_WITH_CAROUSEL_Image_1uowbqng_O');
+                                              'FEED_CARD_COMP_Image_1uowbqng_ON_TAP');
                                           logFirebaseEvent(
                                               'Image_expand_image');
                                           await Navigator.push(
@@ -180,9 +201,9 @@ class _FeedCardWithCarouselWidgetState
                                               child:
                                                   FlutterFlowExpandedImageView(
                                                 image: CachedNetworkImage(
-                                                  fadeInDuration: const Duration(
+                                                  fadeInDuration: Duration(
                                                       milliseconds: 500),
-                                                  fadeOutDuration: const Duration(
+                                                  fadeOutDuration: Duration(
                                                       milliseconds: 500),
                                                   imageUrl: petImageCarouselItem
                                                       .originalUrlCdnLink,
@@ -205,9 +226,9 @@ class _FeedCardWithCarouselWidgetState
                                                 BorderRadius.circular(8.0),
                                             child: CachedNetworkImage(
                                               fadeInDuration:
-                                                  const Duration(milliseconds: 500),
+                                                  Duration(milliseconds: 500),
                                               fadeOutDuration:
-                                                  const Duration(milliseconds: 500),
+                                                  Duration(milliseconds: 500),
                                               imageUrl: petImageCarouselItem
                                                   .originalUrlCdnLink,
                                               width: 300.0,
@@ -224,7 +245,7 @@ class _FeedCardWithCarouselWidgetState
                                     options: CarouselOptions(
                                       initialPage:
                                           min(1, petImageCarousel.length - 1),
-                                      viewportFraction: 0.5,
+                                      viewportFraction: 0.75,
                                       disableCenter: true,
                                       enlargeCenterPage: true,
                                       enlargeFactor: 0.25,
@@ -246,7 +267,7 @@ class _FeedCardWithCarouselWidgetState
                               highlightColor: Colors.transparent,
                               onTap: () async {
                                 logFirebaseEvent(
-                                    'FEED_CARD_WITH_CAROUSEL_Image_47uke5fx_O');
+                                    'FEED_CARD_COMP_Image_47uke5fx_ON_TAP');
                                 logFirebaseEvent('Image_expand_image');
                                 await Navigator.push(
                                   context,
@@ -291,13 +312,16 @@ class _FeedCardWithCarouselWidgetState
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    '12 ',
+                    valueOrDefault<String>(
+                      widget.pet?.likes?.toString(),
+                      '0',
+                    ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Roboto',
                           color: FlutterFlowTheme.of(context).secondaryText,
@@ -326,14 +350,56 @@ class _FeedCardWithCarouselWidgetState
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Icon(
-                        Icons.share_sharp,
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                        size: 30.0,
+                      Builder(
+                        builder: (context) => InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            logFirebaseEvent(
+                                'FEED_CARD_COMP_Icon_m27y5vss_ON_TAP');
+                            if (isWeb == true) {
+                              logFirebaseEvent('Icon_bottom_sheet');
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                enableDrag: false,
+                                context: context,
+                                builder: (context) {
+                                  return Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: Container(
+                                      height: 250.0,
+                                      child: WebShareSheetWidget(
+                                        pet: widget.pet!,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ).then((value) => safeSetState(() {}));
+
+                              return;
+                            } else {
+                              logFirebaseEvent('Icon_share');
+                              await Share.share(
+                                'check out this rescue pet : https://....',
+                                sharePositionOrigin:
+                                    getWidgetBoundingBox(context),
+                              );
+                              return;
+                            }
+                          },
+                          child: Icon(
+                            Icons.share_sharp,
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                            size: 30.0,
+                          ),
+                        ),
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
                         child: Text(
                           'Share',
                           style:
@@ -350,14 +416,69 @@ class _FeedCardWithCarouselWidgetState
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Icon(
-                        Icons.favorite_border,
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                        size: 30.0,
+                      InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          logFirebaseEvent(
+                              'FEED_CARD_COMP_Icon_v2g0j89w_ON_TAP');
+                          if (FFAppState().user != null) {
+                            logFirebaseEvent('Icon_backend_call');
+
+                            await FFAppState().user!.update({
+                              ...mapToFirestore(
+                                {
+                                  'favorites': FieldValue.arrayUnion(
+                                      [widget.pet?.animalID]),
+                                },
+                              ),
+                            });
+                            logFirebaseEvent('Icon_show_snack_bar');
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Added to favorites',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                              ),
+                            );
+                            return;
+                          } else {
+                            logFirebaseEvent('Icon_bottom_sheet');
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              enableDrag: false,
+                              useSafeArea: true,
+                              context: context,
+                              builder: (context) {
+                                return Padding(
+                                  padding: MediaQuery.viewInsetsOf(context),
+                                  child: LoginAndSignupSheetWidget(),
+                                );
+                              },
+                            ).then((value) => safeSetState(() {}));
+
+                            return;
+                          }
+                        },
+                        child: Icon(
+                          Icons.favorite_border,
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                          size: 30.0,
+                        ),
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
                         child: Text(
                           'Favorite',
                           style:
@@ -381,7 +502,7 @@ class _FeedCardWithCarouselWidgetState
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
                         child: Text(
                           'Adopt',
                           style:

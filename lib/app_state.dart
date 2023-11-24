@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
+import 'backend/api_requests/api_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
@@ -30,6 +32,9 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       _searchDistance = prefs.getInt('ff_searchDistance') ?? _searchDistance;
     });
+    _safeInit(() {
+      _user = prefs.getString('ff_user')?.ref ?? _user;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -41,42 +46,57 @@ class FFAppState extends ChangeNotifier {
 
   String _searchBreed = '';
   String get searchBreed => _searchBreed;
-  set searchBreed(String value) {
-    _searchBreed = value;
-    prefs.setString('ff_searchBreed', value);
+  set searchBreed(String _value) {
+    _searchBreed = _value;
+    prefs.setString('ff_searchBreed', _value);
   }
 
   bool _searchDogs = true;
   bool get searchDogs => _searchDogs;
-  set searchDogs(bool value) {
-    _searchDogs = value;
-    prefs.setBool('ff_searchDogs', value);
+  set searchDogs(bool _value) {
+    _searchDogs = _value;
+    prefs.setBool('ff_searchDogs', _value);
   }
 
   bool _searchCats = true;
   bool get searchCats => _searchCats;
-  set searchCats(bool value) {
-    _searchCats = value;
-    prefs.setBool('ff_searchCats', value);
+  set searchCats(bool _value) {
+    _searchCats = _value;
+    prefs.setBool('ff_searchCats', _value);
   }
 
   int _searchDistance = 50;
   int get searchDistance => _searchDistance;
-  set searchDistance(int value) {
-    _searchDistance = value;
-    prefs.setInt('ff_searchDistance', value);
+  set searchDistance(int _value) {
+    _searchDistance = _value;
+    prefs.setInt('ff_searchDistance', _value);
   }
 
   LatLng? _userLocation;
   LatLng? get userLocation => _userLocation;
-  set userLocation(LatLng? value) {
-    _userLocation = value;
+  set userLocation(LatLng? _value) {
+    _userLocation = _value;
   }
 
   bool _searchFavorites = false;
   bool get searchFavorites => _searchFavorites;
-  set searchFavorites(bool value) {
-    _searchFavorites = value;
+  set searchFavorites(bool _value) {
+    _searchFavorites = _value;
+  }
+
+  int _last = 0;
+  int get last => _last;
+  set last(int _value) {
+    _last = _value;
+  }
+
+  DocumentReference? _user;
+  DocumentReference? get user => _user;
+  set user(DocumentReference? _value) {
+    _user = _value;
+    _value != null
+        ? prefs.setString('ff_user', _value.path)
+        : prefs.remove('ff_user');
   }
 }
 

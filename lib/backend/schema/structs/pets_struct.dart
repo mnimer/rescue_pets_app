@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -16,6 +17,7 @@ class PetsStruct extends FFFirebaseStruct {
     String? descriptionPlain,
     List<PetPictureStruct>? pictures,
     String? breed,
+    int? likes,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _animalID = animalID,
         _orgID = orgID,
@@ -24,6 +26,7 @@ class PetsStruct extends FFFirebaseStruct {
         _descriptionPlain = descriptionPlain,
         _pictures = pictures,
         _breed = breed,
+        _likes = likes,
         super(firestoreUtilData);
 
   // "animalID" field.
@@ -70,6 +73,13 @@ class PetsStruct extends FFFirebaseStruct {
   set breed(String? val) => _breed = val;
   bool hasBreed() => _breed != null;
 
+  // "likes" field.
+  int? _likes;
+  int get likes => _likes ?? 0;
+  set likes(int? val) => _likes = val;
+  void incrementLikes(int amount) => _likes = likes + amount;
+  bool hasLikes() => _likes != null;
+
   static PetsStruct fromMap(Map<String, dynamic> data) => PetsStruct(
         animalID: data['animalID'] as String?,
         orgID: data['orgID'] as String?,
@@ -81,6 +91,7 @@ class PetsStruct extends FFFirebaseStruct {
           PetPictureStruct.fromMap,
         ),
         breed: data['breed'] as String?,
+        likes: castToType<int>(data['likes']),
       );
 
   static PetsStruct? maybeFromMap(dynamic data) =>
@@ -94,6 +105,7 @@ class PetsStruct extends FFFirebaseStruct {
         'descriptionPlain': _descriptionPlain,
         'pictures': _pictures?.map((e) => e.toMap()).toList(),
         'breed': _breed,
+        'likes': _likes,
       }.withoutNulls;
 
   @override
@@ -126,6 +138,10 @@ class PetsStruct extends FFFirebaseStruct {
         'breed': serializeParam(
           _breed,
           ParamType.String,
+        ),
+        'likes': serializeParam(
+          _likes,
+          ParamType.int,
         ),
       }.withoutNulls;
 
@@ -167,6 +183,11 @@ class PetsStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        likes: deserializeParam(
+          data['likes'],
+          ParamType.int,
+          false,
+        ),
       );
 
   @override
@@ -182,12 +203,21 @@ class PetsStruct extends FFFirebaseStruct {
         description == other.description &&
         descriptionPlain == other.descriptionPlain &&
         listEquality.equals(pictures, other.pictures) &&
-        breed == other.breed;
+        breed == other.breed &&
+        likes == other.likes;
   }
 
   @override
-  int get hashCode => const ListEquality().hash(
-      [animalID, orgID, name, description, descriptionPlain, pictures, breed]);
+  int get hashCode => const ListEquality().hash([
+        animalID,
+        orgID,
+        name,
+        description,
+        descriptionPlain,
+        pictures,
+        breed,
+        likes
+      ]);
 }
 
 PetsStruct createPetsStruct({
@@ -197,6 +227,7 @@ PetsStruct createPetsStruct({
   String? description,
   String? descriptionPlain,
   String? breed,
+  int? likes,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -209,6 +240,7 @@ PetsStruct createPetsStruct({
       description: description,
       descriptionPlain: descriptionPlain,
       breed: breed,
+      likes: likes,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

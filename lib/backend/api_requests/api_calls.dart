@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
@@ -23,19 +24,19 @@ class PetSearchCall {
 
     final ffApiRequestBody = '''
 {
-  "searchBreed": "$searchBreed",
-  "searchDogs": $searchDogs,
-  "searchCats": $searchCats,
-  "userLocation": $userLocation,
-  "_next": $next,
-  "_last": "$last",
-  "_loadedItems": $loadedItems,
-  "_limit": $limit
+  "searchBreed": "${searchBreed}",
+  "searchDogs": ${searchDogs},
+  "searchCats": ${searchCats},
+  "userLocation": ${userLocation},
+  "_next": ${next},
+  "_last": "${last}",
+  "_loadedItems": ${loadedItems},
+  "_limit": ${limit}
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'petSearch',
       apiUrl:
-          'https://petsearch-3pg22sntiq-uc.a.run.app/?next=$next&loadedItems=$loadedItems&page=$page',
+          'https://petsearch-3pg22sntiq-uc.a.run.app/?next=${next}&loadedItems=${loadedItems}&page=${page}',
       callType: ApiCallType.POST,
       headers: {},
       params: {},

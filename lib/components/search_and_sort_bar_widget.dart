@@ -3,13 +3,20 @@ import '/components/sort_menu_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'search_and_sort_bar_model.dart';
 export 'search_and_sort_bar_model.dart';
 
 class SearchAndSortBarWidget extends StatefulWidget {
-  const SearchAndSortBarWidget({super.key});
+  const SearchAndSortBarWidget({
+    Key? key,
+    required this.searchCallback,
+  }) : super(key: key);
+
+  final Future<dynamic> Function()? searchCallback;
 
   @override
   _SearchAndSortBarWidgetState createState() => _SearchAndSortBarWidgetState();
@@ -43,59 +50,32 @@ class _SearchAndSortBarWidgetState extends State<SearchAndSortBarWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Align(
-      alignment: const AlignmentDirectional(0.00, 0.00),
-      child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    logFirebaseEvent(
-                        'SEARCH_AND_SORT_BAR_Icon_r0t8kzln_ON_TAP');
-                    logFirebaseEvent('Icon_bottom_sheet');
-                    await showModalBottomSheet(
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      enableDrag: false,
-                      context: context,
-                      builder: (context) {
-                        return Padding(
-                          padding: MediaQuery.viewInsetsOf(context),
-                          child: const SizedBox(
-                            height: 300.0,
-                            child: SearchAndFilterBottomSheetWidget(),
-                          ),
-                        );
-                      },
-                    ).then((value) => safeSetState(() {}));
-                  },
-                  child: Icon(
-                    Icons.filter_list,
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                    size: 24.0,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
-                  child: InkWell(
+    return Container(
+      width: MediaQuery.sizeOf(context).width * 1.0,
+      height: 100.0,
+      decoration: BoxDecoration(
+        color: FlutterFlowTheme.of(context).secondaryBackground,
+      ),
+      child: Align(
+        alignment: AlignmentDirectional(0.00, 0.00),
+        child: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
                       logFirebaseEvent(
-                          'SEARCH_AND_SORT_BAR_Text_r4ahllx7_ON_TAP');
-                      logFirebaseEvent('Text_bottom_sheet');
+                          'SEARCH_AND_SORT_BAR_Icon_r0t8kzln_ON_TAP');
+                      logFirebaseEvent('Icon_bottom_sheet');
                       await showModalBottomSheet(
                         isScrollControlled: true,
                         backgroundColor: Colors.transparent,
@@ -104,29 +84,41 @@ class _SearchAndSortBarWidgetState extends State<SearchAndSortBarWidget> {
                         builder: (context) {
                           return Padding(
                             padding: MediaQuery.viewInsetsOf(context),
-                            child: const SizedBox(
-                              height: 300.0,
-                              child: SearchAndFilterBottomSheetWidget(),
+                            child: Container(
+                              height: 310.0,
+                              child: SearchAndFilterBottomSheetWidget(
+                                searchCallback: () async {
+                                  logFirebaseEvent('_show_snack_bar');
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'boom',
+                                        style: TextStyle(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                        ),
+                                      ),
+                                      duration: Duration(milliseconds: 4000),
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .secondary,
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           );
                         },
                       ).then((value) => safeSetState(() {}));
                     },
-                    child: Text(
-                      'Filter',
-                      style: FlutterFlowTheme.of(context).bodyMedium,
+                    child: Icon(
+                      Icons.filter_list,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 24.0,
                     ),
                   ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Align(
-                  alignment: const AlignmentDirectional(1.00, 0.00),
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                     child: InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
@@ -134,7 +126,7 @@ class _SearchAndSortBarWidgetState extends State<SearchAndSortBarWidget> {
                       highlightColor: Colors.transparent,
                       onTap: () async {
                         logFirebaseEvent(
-                            'SEARCH_AND_SORT_BAR_Text_xtms748n_ON_TAP');
+                            'SEARCH_AND_SORT_BAR_Text_r4ahllx7_ON_TAP');
                         logFirebaseEvent('Text_bottom_sheet');
                         await showModalBottomSheet(
                           isScrollControlled: true,
@@ -144,55 +136,116 @@ class _SearchAndSortBarWidgetState extends State<SearchAndSortBarWidget> {
                           builder: (context) {
                             return Padding(
                               padding: MediaQuery.viewInsetsOf(context),
-                              child: const SizedBox(
-                                height: 200.0,
-                                child: SortMenuWidget(),
+                              child: Container(
+                                height: 310.0,
+                                child: SearchAndFilterBottomSheetWidget(
+                                  searchCallback: () async {
+                                    logFirebaseEvent('_show_snack_bar');
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'action callback',
+                                          style: TextStyle(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                          ),
+                                        ),
+                                        duration: Duration(milliseconds: 4000),
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondary,
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
                             );
                           },
                         ).then((value) => safeSetState(() {}));
                       },
                       child: Text(
-                        'Sort',
+                        'Filter',
                         style: FlutterFlowTheme.of(context).bodyMedium,
                       ),
                     ),
                   ),
-                ),
-                InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    logFirebaseEvent(
-                        'SEARCH_AND_SORT_BAR_Icon_q70lejs8_ON_TAP');
-                    logFirebaseEvent('Icon_bottom_sheet');
-                    await showModalBottomSheet(
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      enableDrag: false,
-                      context: context,
-                      builder: (context) {
-                        return Padding(
-                          padding: MediaQuery.viewInsetsOf(context),
-                          child: const SizedBox(
-                            height: 200.0,
-                            child: SortMenuWidget(),
-                          ),
-                        );
-                      },
-                    ).then((value) => safeSetState(() {}));
-                  },
-                  child: FaIcon(
-                    FontAwesomeIcons.sortAmountDown,
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                    size: 24.0,
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Align(
+                    alignment: AlignmentDirectional(1.00, 0.00),
+                    child: Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          logFirebaseEvent(
+                              'SEARCH_AND_SORT_BAR_Text_xtms748n_ON_TAP');
+                          logFirebaseEvent('Text_bottom_sheet');
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            enableDrag: false,
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding: MediaQuery.viewInsetsOf(context),
+                                child: Container(
+                                  height: 200.0,
+                                  child: SortMenuWidget(),
+                                ),
+                              );
+                            },
+                          ).then((value) => safeSetState(() {}));
+                        },
+                        child: Text(
+                          'Sort',
+                          style: FlutterFlowTheme.of(context).bodyMedium,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                  InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      logFirebaseEvent(
+                          'SEARCH_AND_SORT_BAR_Icon_q70lejs8_ON_TAP');
+                      logFirebaseEvent('Icon_bottom_sheet');
+                      await showModalBottomSheet(
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        enableDrag: false,
+                        context: context,
+                        builder: (context) {
+                          return Padding(
+                            padding: MediaQuery.viewInsetsOf(context),
+                            child: Container(
+                              height: 200.0,
+                              child: SortMenuWidget(),
+                            ),
+                          );
+                        },
+                      ).then((value) => safeSetState(() {}));
+                    },
+                    child: FaIcon(
+                      FontAwesomeIcons.sortAmountDown,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 24.0,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

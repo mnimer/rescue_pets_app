@@ -1,11 +1,21 @@
 import '/backend/api_requests/api_calls.dart';
-import '/components/feed_card_with_carousel_widget.dart';
-import '/components/search_and_sort_bar_widget.dart';
+import '/components/empty_search_results_message_widget.dart';
+import '/components/feed_card_widget.dart';
+import '/components/search_and_filter_bottom_sheet_widget.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/backend/schema/structs/index.dart';
+import '/flutter_flow/permissions_util.dart';
+import 'dart:async';
 import 'feed_widget.dart' show FeedWidget;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:provider/provider.dart';
 
 class FeedModel extends FlutterFlowModel<FeedWidget> {
   ///  Local state fields for this page.
@@ -17,37 +27,45 @@ class FeedModel extends FlutterFlowModel<FeedWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Model for SearchAndSortBar component.
-  late SearchAndSortBarModel searchAndSortBarModel;
   // State field(s) for ListView widget.
 
   PagingController<ApiPagingParams, dynamic>? listViewPagingController;
   Function(ApiPagingParams nextPageMarker)? listViewApiCall;
 
-  // Models for FeedCardWithCarousel dynamic component.
-  late FlutterFlowDynamicModels<FeedCardWithCarouselModel>
-      feedCardWithCarouselModels;
+  // Models for FeedCard dynamic component.
+  late FlutterFlowDynamicModels<FeedCardModel> feedCardModels;
 
   /// Initialization and disposal methods.
 
-  @override
   void initState(BuildContext context) {
-    searchAndSortBarModel = createModel(context, () => SearchAndSortBarModel());
-    feedCardWithCarouselModels =
-        FlutterFlowDynamicModels(() => FeedCardWithCarouselModel());
+    feedCardModels = FlutterFlowDynamicModels(() => FeedCardModel());
   }
 
-  @override
   void dispose() {
     unfocusNode.dispose();
-    searchAndSortBarModel.dispose();
     listViewPagingController?.dispose();
-    feedCardWithCarouselModels.dispose();
+    feedCardModels.dispose();
   }
 
   /// Action blocks are added here.
 
   /// Additional helper methods are added here.
+
+  Future waitForOnePageForListView({
+    double minWait = 0,
+    double maxWait = double.infinity,
+  }) async {
+    final stopwatch = Stopwatch()..start();
+    while (true) {
+      await Future.delayed(Duration(milliseconds: 50));
+      final timeElapsed = stopwatch.elapsedMilliseconds;
+      final requestComplete =
+          (listViewPagingController?.nextPageKey?.nextPageNumber ?? 0) > 0;
+      if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
+        break;
+      }
+    }
+  }
 
   PagingController<ApiPagingParams, dynamic> setListViewController(
     Function(ApiPagingParams) apiCall,
@@ -74,11 +92,11 @@ class FeedModel extends FlutterFlowModel<FeedWidget> {
         final pageItems =
             (PetListStruct.fromMap(listViewPetSearchResponse.jsonBody).pets ??
                     [])
-                .toList();
+                .toList() as List;
         final newNumItems = nextPageMarker.numItems + pageItems.length;
         listViewPagingController?.appendPage(
           pageItems,
-          (pageItems.isNotEmpty)
+          (pageItems.length > 0)
               ? ApiPagingParams(
                   nextPageNumber: nextPageMarker.nextPageNumber + 1,
                   numItems: newNumItems,

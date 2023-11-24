@@ -3,14 +3,16 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
 class PetsRecord extends FirestoreRecord {
   PetsRecord._(
-    super.reference,
-    super.data,
-  ) {
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
     _initializeFields();
   }
 
@@ -144,6 +146,11 @@ class PetsRecord extends FirestoreRecord {
   List<String> get petImages => _petImages ?? const [];
   bool hasPetImages() => _petImages != null;
 
+  // "_likes" field.
+  int? _likes;
+  int get likes => _likes ?? 0;
+  bool hasLikes() => _likes != null;
+
   void _initializeFields() {
     _breed = snapshotData['breed'] as String?;
     _description = snapshotData['description'] as String?;
@@ -174,6 +181,7 @@ class PetsRecord extends FirestoreRecord {
     _isDeleted = snapshotData['_isDeleted'] as bool?;
     _animalID = snapshotData['animalID'] as String?;
     _petImages = getDataList(snapshotData['petImages']);
+    _likes = castToType<int>(snapshotData['_likes']);
   }
 
   static CollectionReference get collection =>
@@ -233,6 +241,7 @@ Map<String, dynamic> createPetsRecordData({
   OrgLocationStruct? location,
   bool? isDeleted,
   String? animalID,
+  int? likes,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -259,6 +268,7 @@ Map<String, dynamic> createPetsRecordData({
       'location': OrgLocationStruct().toMap(),
       '_isDeleted': isDeleted,
       'animalID': animalID,
+      '_likes': likes,
     }.withoutNulls,
   );
 
@@ -299,7 +309,8 @@ class PetsRecordDocumentEquality implements Equality<PetsRecord> {
         e1?.location == e2?.location &&
         e1?.isDeleted == e2?.isDeleted &&
         e1?.animalID == e2?.animalID &&
-        listEquality.equals(e1?.petImages, e2?.petImages);
+        listEquality.equals(e1?.petImages, e2?.petImages) &&
+        e1?.likes == e2?.likes;
   }
 
   @override
@@ -329,7 +340,8 @@ class PetsRecordDocumentEquality implements Equality<PetsRecord> {
         e?.location,
         e?.isDeleted,
         e?.animalID,
-        e?.petImages
+        e?.petImages,
+        e?.likes
       ]);
 
   @override
