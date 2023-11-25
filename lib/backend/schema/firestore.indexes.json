@@ -1,22 +1,3 @@
 {
-  "indexes": [
-    {
-      "collectionGroup": "pets",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "_isDeleted",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "species",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "_lastUpdated",
-          "order": "DESCENDING"
-        }
-      ]
-    }
-  ]
+  "indexes": []
 }

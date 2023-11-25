@@ -1,1 +1,1 @@
-export 'image_shuffle_widget.dart' show ImageShuffleWidget;
+export 'skeleton.dart' show Skeleton;

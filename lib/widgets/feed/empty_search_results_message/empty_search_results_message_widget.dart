@@ -47,33 +47,42 @@ class _EmptySearchResultsMessageWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Align(
-          alignment: AlignmentDirectional(0.00, 0.00),
-          child: Text(
-            'No pets were found matching your search.',
-            textAlign: TextAlign.center,
-            style: FlutterFlowTheme.of(context).bodyMedium,
+    context.watch<FFAppState>();
+
+    return Container(
+      width: MediaQuery.sizeOf(context).width * 1.0,
+      height: MediaQuery.sizeOf(context).height * 1.0,
+      decoration: BoxDecoration(
+        color: FlutterFlowTheme.of(context).secondaryBackground,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Align(
+            alignment: AlignmentDirectional(0.00, 0.00),
+            child: Text(
+              'No pets were found matching your search.',
+              textAlign: TextAlign.center,
+              style: FlutterFlowTheme.of(context).bodyMedium,
+            ),
           ),
-        ),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Species: ',
-              style: FlutterFlowTheme.of(context).bodyMedium,
-            ),
-            Text(
-              widget.species!,
-              style: FlutterFlowTheme.of(context).bodyMedium,
-            ),
-          ],
-        ),
-      ],
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Species: ',
+                style: FlutterFlowTheme.of(context).bodyMedium,
+              ),
+              Text(
+                widget.species!,
+                style: FlutterFlowTheme.of(context).bodyMedium,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

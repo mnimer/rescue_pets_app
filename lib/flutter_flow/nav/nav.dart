@@ -38,52 +38,35 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) => NavBarPage(),
+      errorBuilder: (context, state) => FeedWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => NavBarPage(),
+          builder: (context, _) => FeedWidget(),
           routes: [
             FFRoute(
               name: 'AdoptionPage',
               path: 'adoptionPage',
+              asyncParams: {
+                'pet': getDoc(['pets'], PetsRecord.fromSnapshot),
+              },
               builder: (context, params) => AdoptionPageWidget(
                 orgId: params.getParam('orgId', ParamType.String),
-                pet: params.getParam(
-                    'pet', ParamType.DocumentReference, false, ['pets']),
+                pet: params.getParam('pet', ParamType.Document),
               ),
-            ),
-            FFRoute(
-              name: 'LoginPage',
-              path: 'loginPage',
-              builder: (context, params) => LoginPageWidget(),
-            ),
-            FFRoute(
-              name: 'Home',
-              path: 'home',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Home')
-                  : HomeWidget(),
             ),
             FFRoute(
               name: 'Feed',
               path: 'feed',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Feed')
-                  : FeedWidget(
-                      species: params.getParam('species', ParamType.String),
-                    ),
+              builder: (context, params) => FeedWidget(
+                species: params.getParam('species', ParamType.String),
+              ),
             ),
             FFRoute(
-              name: 'Favorites',
-              path: 'favorites',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Favorites')
-                  : FavoritesWidget(
-                      animalType:
-                          params.getParam('animalType', ParamType.String),
-                    ),
+              name: 'shelters',
+              path: 'shelters',
+              builder: (context, params) => SheltersWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
