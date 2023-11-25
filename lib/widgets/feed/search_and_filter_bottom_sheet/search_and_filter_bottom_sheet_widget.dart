@@ -29,6 +29,8 @@ class _SearchAndFilterBottomSheetWidgetState
     extends State<SearchAndFilterBottomSheetWidget> {
   late SearchAndFilterBottomSheetModel _model;
 
+  bool textFieldFocusListenerRegistered = false;
+
   @override
   void setState(VoidCallback callback) {
     super.setState(callback);
@@ -40,7 +42,8 @@ class _SearchAndFilterBottomSheetWidgetState
     super.initState();
     _model = createModel(context, () => SearchAndFilterBottomSheetModel());
 
-    _model.textController ??= TextEditingController();
+    _model.textController ??=
+        TextEditingController(text: FFAppState().searchBreed);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -57,6 +60,7 @@ class _SearchAndFilterBottomSheetWidgetState
     context.watch<FFAppState>();
 
     return Container(
+      height: 300.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
         boxShadow: [
@@ -111,7 +115,8 @@ class _SearchAndFilterBottomSheetWidgetState
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     8.0, 0.0, 8.0, 0.0),
                                 child: Autocomplete<String>(
-                                  initialValue: TextEditingValue(),
+                                  initialValue: TextEditingValue(
+                                      text: FFAppState().searchBreed),
                                   optionsBuilder: (textEditingValue) {
                                     if (textEditingValue.text == '') {
                                       return const Iterable<String>.empty();
@@ -160,7 +165,44 @@ class _SearchAndFilterBottomSheetWidgetState
                                     onEditingComplete,
                                   ) {
                                     _model.textFieldFocusNode = focusNode;
-
+                                    if (!textFieldFocusListenerRegistered) {
+                                      textFieldFocusListenerRegistered = true;
+                                      _model.textFieldFocusNode!.addListener(
+                                        () async {
+                                          logFirebaseEvent(
+                                              'SEARCH_AND_FILTER_BOTTOM_SHEET_TextField');
+                                          logFirebaseEvent(
+                                              'TextField_update_app_state');
+                                          setState(() {
+                                            FFAppState().searchBreed =
+                                                _model.textController.text;
+                                          });
+                                          logFirebaseEvent(
+                                              'TextField_show_snack_bar');
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                FFAppState().searchBreed,
+                                                style: TextStyle(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 1000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                            ),
+                                          );
+                                          logFirebaseEvent(
+                                              'TextField_execute_callback');
+                                          await widget.searchCallback?.call();
+                                        },
+                                      );
+                                    }
                                     _model.textController =
                                         textEditingController;
                                     return TextFormField(
@@ -171,19 +213,7 @@ class _SearchAndFilterBottomSheetWidgetState
                                       onChanged: (_) => EasyDebounce.debounce(
                                         '_model.textController',
                                         Duration(milliseconds: 2000),
-                                        () async {
-                                          logFirebaseEvent(
-                                              'SEARCH_AND_FILTER_BOTTOM_SHEET_TextField');
-                                          logFirebaseEvent(
-                                              'TextField_update_app_state');
-                                          setState(() {
-                                            FFAppState().searchBreed =
-                                                _model.textFieldSelectedOption!;
-                                          });
-                                          logFirebaseEvent(
-                                              'TextField_execute_callback');
-                                          await widget.searchCallback?.call();
-                                        },
+                                        () => setState(() {}),
                                       ),
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -232,9 +262,24 @@ class _SearchAndFilterBottomSheetWidgetState
                                         prefixIcon: Icon(
                                           Icons.search,
                                         ),
+                                        suffixIcon: _model
+                                                .textController!.text.isNotEmpty
+                                            ? InkWell(
+                                                onTap: () async {
+                                                  _model.textController
+                                                      ?.clear();
+                                                  setState(() {});
+                                                },
+                                                child: Icon(
+                                                  Icons.clear,
+                                                  size: 16.0,
+                                                ),
+                                              )
+                                            : null,
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium,
+                                      minLines: 1,
                                       validator: _model.textControllerValidator
                                           .asValidator(context),
                                     );
@@ -276,8 +321,18 @@ class _SearchAndFilterBottomSheetWidgetState
                                     '500 miles',
                                     'anywhere'
                                   ],
-                                  onChanged: (val) => setState(
-                                      () => _model.distanceOptionsValue = val),
+                                  onChanged: (val) async {
+                                    setState(() =>
+                                        _model.distanceOptionsValue = val);
+                                    logFirebaseEvent(
+                                        'SEARCH_AND_FILTER_BOTTOM_SHEET_DistanceO');
+                                    logFirebaseEvent(
+                                        'DistanceOptions_update_app_state');
+                                    setState(() {
+                                      FFAppState().searchDistance =
+                                          _model.distanceOptionsValue!;
+                                    });
+                                  },
                                   width: 200.0,
                                   height: 40.0,
                                   textStyle:
@@ -319,6 +374,7 @@ class _SearchAndFilterBottomSheetWidgetState
                       children: [
                         Row(
                           mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
                               'Dogs',
@@ -350,6 +406,18 @@ class _SearchAndFilterBottomSheetWidgetState
                                   _model.updatePage(() {
                                     FFAppState().searchDogs = false;
                                   });
+                                  if (_model.catSwitchValue == false) {
+                                    logFirebaseEvent(
+                                        'dogSwitch_update_app_state');
+                                    setState(() {
+                                      FFAppState().searchCats = true;
+                                    });
+                                    logFirebaseEvent(
+                                        'dogSwitch_set_form_field');
+                                    setState(() {
+                                      _model.catSwitchValue = true;
+                                    });
+                                  }
                                   logFirebaseEvent(
                                       'dogSwitch_execute_callback');
                                   await widget.searchCallback?.call();
@@ -367,6 +435,7 @@ class _SearchAndFilterBottomSheetWidgetState
                         ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
                               'Cats',
@@ -398,6 +467,18 @@ class _SearchAndFilterBottomSheetWidgetState
                                   _model.updatePage(() {
                                     FFAppState().searchCats = false;
                                   });
+                                  if (_model.dogSwitchValue == false) {
+                                    logFirebaseEvent(
+                                        'catSwitch_update_app_state');
+                                    setState(() {
+                                      FFAppState().searchDogs = true;
+                                    });
+                                    logFirebaseEvent(
+                                        'catSwitch_set_form_field');
+                                    setState(() {
+                                      _model.dogSwitchValue = true;
+                                    });
+                                  }
                                   logFirebaseEvent(
                                       'catSwitch_execute_callback');
                                   await widget.searchCallback?.call();

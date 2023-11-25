@@ -1,10 +1,10 @@
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
-import '/components/login_and_signup_sheet_widget.dart';
-import '/components/web_share_sheet_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/widgets/feed/login_and_signup_sheet/login_and_signup_sheet_widget.dart';
+import '/widgets/feed/web_share_sheet/web_share_sheet_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -58,6 +58,17 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
     context.watch<FFAppState>();
 
     return Container(
+      height: () {
+        if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+          return 550.0;
+        } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+          return 600.0;
+        } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+          return 700.0;
+        } else {
+          return 525.0;
+        }
+      }(),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
       ),
@@ -311,6 +322,12 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                 ),
               ),
             ),
+            SelectionArea(
+                child: Text(
+              widget.pet!.descriptionPlain.maybeHandleOverflow(maxChars: 120),
+              maxLines: 2,
+              style: FlutterFlowTheme.of(context).bodyMedium,
+            )),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
               child: Row(
@@ -369,11 +386,8 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                                 builder: (context) {
                                   return Padding(
                                     padding: MediaQuery.viewInsetsOf(context),
-                                    child: Container(
-                                      height: 250.0,
-                                      child: WebShareSheetWidget(
-                                        pet: widget.pet!,
-                                      ),
+                                    child: WebShareSheetWidget(
+                                      pet: widget.pet!,
                                     ),
                                   );
                                 },

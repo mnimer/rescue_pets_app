@@ -10,7 +10,7 @@ const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
 class PetSearchCall {
   static Future<ApiCallResponse> call({
-    String? searchBreed = '\'\'',
+    String? searchBreed = ' ',
     bool? searchDogs,
     bool? searchCats,
     List<double>? userLocationList,

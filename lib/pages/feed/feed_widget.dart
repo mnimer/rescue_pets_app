@@ -1,11 +1,11 @@
 import '/backend/api_requests/api_calls.dart';
-import '/components/empty_search_results_message_widget.dart';
-import '/components/feed_card_widget.dart';
-import '/components/search_and_filter_bottom_sheet_widget.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/widgets/custom_nav_bar/custom_nav_bar_widget.dart';
+import '/widgets/feed/empty_search_results_message/empty_search_results_message_widget.dart';
+import '/widgets/feed/feed_card/feed_card_widget.dart';
+import '/widgets/feed/search_and_filter_bottom_sheet/search_and_filter_bottom_sheet_widget.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/permissions_util.dart';
 import 'dart:async';
@@ -102,20 +102,6 @@ class _FeedWidgetState extends State<FeedWidget> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
-          leading: FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30.0,
-            borderWidth: 1.0,
-            buttonSize: 60.0,
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.white,
-              size: 30.0,
-            ),
-            onPressed: () {
-              print('IconButton pressed ...');
-            },
-          ),
           title: Text(
             'Dogs / Puppies',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
@@ -125,7 +111,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                 ),
           ),
           actions: [],
-          centerTitle: true,
+          centerTitle: false,
           elevation: 2.0,
         ),
         body: SafeArea(
@@ -140,9 +126,8 @@ class _FeedWidgetState extends State<FeedWidget> {
                     alignment: AlignmentDirectional(0.00, 0.00),
                     child: Container(
                       width: MediaQuery.sizeOf(context).width * 1.0,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                      ),
+                      height: 40.0,
+                      decoration: BoxDecoration(),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -174,20 +159,16 @@ class _FeedWidgetState extends State<FeedWidget> {
                                       child: Padding(
                                         padding:
                                             MediaQuery.viewInsetsOf(context),
-                                        child: Container(
-                                          height: 310.0,
-                                          child:
-                                              SearchAndFilterBottomSheetWidget(
-                                            searchCallback: () async {
-                                              logFirebaseEvent(
-                                                  '_refresh_database_request');
-                                              setState(() => _model
-                                                  .listViewPagingController
-                                                  ?.refresh());
-                                              await _model
-                                                  .waitForOnePageForListView();
-                                            },
-                                          ),
+                                        child: SearchAndFilterBottomSheetWidget(
+                                          searchCallback: () async {
+                                            logFirebaseEvent(
+                                                '_refresh_database_request');
+                                            setState(() => _model
+                                                .listViewPagingController
+                                                ?.refresh());
+                                            await _model
+                                                .waitForOnePageForListView();
+                                          },
                                         ),
                                       ),
                                     );
@@ -227,20 +208,16 @@ class _FeedWidgetState extends State<FeedWidget> {
                                       child: Padding(
                                         padding:
                                             MediaQuery.viewInsetsOf(context),
-                                        child: Container(
-                                          height: 310.0,
-                                          child:
-                                              SearchAndFilterBottomSheetWidget(
-                                            searchCallback: () async {
-                                              logFirebaseEvent(
-                                                  '_refresh_database_request');
-                                              setState(() => _model
-                                                  .listViewPagingController
-                                                  ?.refresh());
-                                              await _model
-                                                  .waitForOnePageForListView();
-                                            },
-                                          ),
+                                        child: SearchAndFilterBottomSheetWidget(
+                                          searchCallback: () async {
+                                            logFirebaseEvent(
+                                                '_refresh_database_request');
+                                            setState(() => _model
+                                                .listViewPagingController
+                                                ?.refresh());
+                                            await _model
+                                                .waitForOnePageForListView();
+                                          },
                                         ),
                                       ),
                                     );
@@ -261,7 +238,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                   ),
                   Container(
                     width: MediaQuery.sizeOf(context).width * 1.0,
-                    height: MediaQuery.sizeOf(context).height * 0.99,
+                    height: MediaQuery.sizeOf(context).height * 0.8,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).primaryBackground,
                     ),
@@ -341,7 +318,6 @@ class _FeedWidgetState extends State<FeedWidget> {
                               elevation: 0.0,
                               child: ClipRRect(
                                 child: Container(
-                                  height: 500.0,
                                   decoration: BoxDecoration(
                                     color: FlutterFlowTheme.of(context)
                                         .primaryBackground,
@@ -381,6 +357,11 @@ class _FeedWidgetState extends State<FeedWidget> {
                         ),
                       ),
                     ),
+                  ),
+                  wrapWithModel(
+                    model: _model.customNavBarModel,
+                    updateCallback: () => setState(() {}),
+                    child: CustomNavBarWidget(),
                   ),
                 ],
               ),

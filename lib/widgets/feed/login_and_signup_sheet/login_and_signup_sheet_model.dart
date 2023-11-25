@@ -12,11 +12,6 @@ class LoginAndSignupSheetModel
     extends FlutterFlowModel<LoginAndSignupSheetWidget> {
   ///  State fields for stateful widgets in this component.
 
-  // State field(s) for TabBar widget.
-  TabController? tabBarController;
-  int get tabBarCurrentIndex =>
-      tabBarController != null ? tabBarController!.index : 0;
-
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode1;
   TextEditingController? textController1;
@@ -26,14 +21,6 @@ class LoginAndSignupSheetModel
   TextEditingController? textController2;
   late bool passwordVisibility;
   String? Function(BuildContext, String?)? textController2Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode3;
-  TextEditingController? textController3;
-  String? Function(BuildContext, String?)? textController3Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode4;
-  TextEditingController? textController4;
-  String? Function(BuildContext, String?)? textController4Validator;
 
   /// Initialization and disposal methods.
 
@@ -42,18 +29,11 @@ class LoginAndSignupSheetModel
   }
 
   void dispose() {
-    tabBarController?.dispose();
     textFieldFocusNode1?.dispose();
     textController1?.dispose();
 
     textFieldFocusNode2?.dispose();
     textController2?.dispose();
-
-    textFieldFocusNode3?.dispose();
-    textController3?.dispose();
-
-    textFieldFocusNode4?.dispose();
-    textController4?.dispose();
   }
 
   /// Action blocks are added here.

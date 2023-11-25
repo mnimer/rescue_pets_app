@@ -1,11 +1,11 @@
 import '/backend/api_requests/api_calls.dart';
-import '/components/empty_search_results_message_widget.dart';
-import '/components/feed_card_widget.dart';
-import '/components/search_and_filter_bottom_sheet_widget.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/widgets/custom_nav_bar/custom_nav_bar_widget.dart';
+import '/widgets/feed/empty_search_results_message/empty_search_results_message_widget.dart';
+import '/widgets/feed/feed_card/feed_card_widget.dart';
+import '/widgets/feed/search_and_filter_bottom_sheet/search_and_filter_bottom_sheet_widget.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/permissions_util.dart';
 import 'dart:async';
@@ -34,17 +34,21 @@ class FeedModel extends FlutterFlowModel<FeedWidget> {
 
   // Models for FeedCard dynamic component.
   late FlutterFlowDynamicModels<FeedCardModel> feedCardModels;
+  // Model for CustomNavBar component.
+  late CustomNavBarModel customNavBarModel;
 
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {
     feedCardModels = FlutterFlowDynamicModels(() => FeedCardModel());
+    customNavBarModel = createModel(context, () => CustomNavBarModel());
   }
 
   void dispose() {
     unfocusNode.dispose();
     listViewPagingController?.dispose();
     feedCardModels.dispose();
+    customNavBarModel.dispose();
   }
 
   /// Action blocks are added here.

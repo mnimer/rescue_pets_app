@@ -62,6 +62,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => FeedWidget(
                 species: params.getParam('species', ParamType.String),
               ),
+            ),
+            FFRoute(
+              name: 'shelters',
+              path: 'shelters',
+              builder: (context, params) => SheltersWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
