@@ -100,7 +100,6 @@ class _CustomNavBarWidgetState extends State<CustomNavBarWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   FlutterFlowIconButton(
-                    borderColor: FlutterFlowTheme.of(context).primary,
                     borderRadius: 20.0,
                     borderWidth: 1.0,
                     buttonSize: 40.0,
