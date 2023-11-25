@@ -82,9 +82,7 @@ PetsStruct? createPetFromJson(dynamic pet) {
   }
 }
 
-List<double> splitLatLng(
-  double? lat,
-  double? lng,
-) {
-  return [lat ?? 0.0, lng ?? 0.0];
+List<double>? splitLatLng(LatLng? latLng) {
+  if (latLng == null) return null;
+  return [latLng.latitude, latLng.longitude];
 }

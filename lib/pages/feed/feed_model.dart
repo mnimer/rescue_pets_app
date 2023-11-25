@@ -1,6 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/widgets/custom_nav_bar/custom_nav_bar_widget.dart';
 import '/widgets/feed/feed_card/feed_card_widget.dart';
 import '/backend/schema/structs/index.dart';
 import 'dart:async';
@@ -25,15 +24,12 @@ class FeedModel extends FlutterFlowModel<FeedWidget> {
 
   // Models for FeedCard dynamic component.
   late FlutterFlowDynamicModels<FeedCardModel> feedCardModels;
-  // Model for CustomNavBar component.
-  late CustomNavBarModel customNavBarModel;
 
   /// Initialization and disposal methods.
 
   @override
   void initState(BuildContext context) {
     feedCardModels = FlutterFlowDynamicModels(() => FeedCardModel());
-    customNavBarModel = createModel(context, () => CustomNavBarModel());
   }
 
   @override
@@ -41,7 +37,6 @@ class FeedModel extends FlutterFlowModel<FeedWidget> {
     unfocusNode.dispose();
     listViewPagingController?.dispose();
     feedCardModels.dispose();
-    customNavBarModel.dispose();
   }
 
   /// Action blocks are added here.

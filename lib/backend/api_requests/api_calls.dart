@@ -13,11 +13,9 @@ class PetSearchCall {
     bool? searchDogs,
     bool? searchCats,
     List<double>? userLocationList,
-    int? next,
     String? last = '',
-    int? loadedItems,
-    int? limit = 10,
-    int? page = 1,
+    bool? includeDeleted = false,
+    int? searchDistance = 50,
   }) async {
     final userLocation = _serializeList(userLocationList);
 
@@ -27,15 +25,12 @@ class PetSearchCall {
   "searchDogs": $searchDogs,
   "searchCats": $searchCats,
   "userLocation": $userLocation,
-  "_next": $next,
-  "_last": "$last",
-  "_loadedItems": $loadedItems,
-  "_limit": $limit
+  "searchDistance": $searchDistance,
+  "_last": "$last"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'petSearch',
-      apiUrl:
-          'https://petsearch-3pg22sntiq-uc.a.run.app/?next=$next&loadedItems=$loadedItems&page=$page',
+      apiUrl: 'https://petsearch-3pg22sntiq-uc.a.run.app/',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -57,6 +52,22 @@ class PetSearchCall {
         response,
         r'''$.last''',
       );
+}
+
+class FavoritesSearchCall {
+  static Future<ApiCallResponse> call() async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'favoritesSearch',
+      apiUrl: 'https://petsearch-3pg22sntiq-uc.a.run.app/',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
 }
 
 class ApiPagingParams {

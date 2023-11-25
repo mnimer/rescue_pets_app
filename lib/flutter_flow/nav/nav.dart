@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '/backend/backend.dart';
 
 import '/index.dart';
+import '/main.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 export 'package:go_router/go_router.dart';
@@ -30,12 +31,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) => const FeedWidget(),
+      errorBuilder: (context, state) => const NavBarPage(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => const FeedWidget(),
+          builder: (context, _) => const NavBarPage(),
           routes: [
             FFRoute(
               name: 'AdoptionPage',
@@ -51,14 +52,36 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'Feed',
               path: 'feed',
-              builder: (context, params) => FeedWidget(
-                species: params.getParam('species', ParamType.String),
-              ),
+              builder: (context, params) => params.isEmpty
+                  ? const NavBarPage(initialPage: 'Feed')
+                  : NavBarPage(
+                      initialPage: 'Feed',
+                      page: FeedWidget(
+                        species: params.getParam('species', ParamType.String),
+                      ),
+                    ),
             ),
             FFRoute(
               name: 'shelters',
               path: 'shelters',
-              builder: (context, params) => const SheltersWidget(),
+              builder: (context, params) => params.isEmpty
+                  ? const NavBarPage(initialPage: 'shelters')
+                  : const NavBarPage(
+                      initialPage: 'shelters',
+                      page: SheltersWidget(),
+                    ),
+            ),
+            FFRoute(
+              name: 'Favorites',
+              path: 'favorites',
+              builder: (context, params) => params.isEmpty
+                  ? const NavBarPage(initialPage: 'Favorites')
+                  : NavBarPage(
+                      initialPage: 'Favorites',
+                      page: FavoritesWidget(
+                        species: params.getParam('species', ParamType.String),
+                      ),
+                    ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),

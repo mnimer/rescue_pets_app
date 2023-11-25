@@ -1,10 +1,10 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/widgets/custom_nav_bar/custom_nav_bar_widget.dart';
 import '/widgets/feed/empty_search_results_message/empty_search_results_message_widget.dart';
 import '/widgets/feed/feed_card/feed_card_widget.dart';
 import '/widgets/feed/search_and_filter_bottom_sheet/search_and_filter_bottom_sheet_widget.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/flutter_flow/permissions_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -64,6 +64,8 @@ class _FeedWidgetState extends State<FeedWidget> {
       );
     });
 
+    getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0), cached: true)
+        .then((loc) => setState(() => currentUserLocationValue = loc));
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -86,6 +88,22 @@ class _FeedWidgetState extends State<FeedWidget> {
     }
 
     context.watch<FFAppState>();
+    if (currentUserLocationValue == null) {
+      return Container(
+        color: FlutterFlowTheme.of(context).primaryBackground,
+        child: Center(
+          child: SizedBox(
+            width: 50.0,
+            height: 50.0,
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                FlutterFlowTheme.of(context).primary,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
 
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
@@ -98,7 +116,15 @@ class _FeedWidgetState extends State<FeedWidget> {
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
           title: Text(
-            'Dogs / Puppies',
+            () {
+              if (FFAppState().searchDogs && FFAppState().searchCats) {
+                return 'Dogs & Cats';
+              } else if (FFAppState().searchDogs && !FFAppState().searchCats) {
+                return 'Dogs';
+              } else {
+                return 'Cats';
+              }
+            }(),
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Roboto',
                   color: Colors.white,
@@ -113,127 +139,123 @@ class _FeedWidgetState extends State<FeedWidget> {
           top: true,
           child: Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Align(
-                    alignment: const AlignmentDirectional(0.00, 0.00),
-                    child: Container(
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: 40.0,
-                      decoration: const BoxDecoration(),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                4.0, 0.0, 0.0, 0.0),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                logFirebaseEvent(
-                                    'FEED_PAGE_Text_orzrsool_ON_TAP');
-                                logFirebaseEvent('Text_bottom_sheet');
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  enableDrag: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return GestureDetector(
-                                      onTap: () => _model
-                                              .unfocusNode.canRequestFocus
-                                          ? FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode)
-                                          : FocusScope.of(context).unfocus(),
-                                      child: Padding(
-                                        padding:
-                                            MediaQuery.viewInsetsOf(context),
-                                        child: SearchAndFilterBottomSheetWidget(
-                                          searchCallback: () async {
-                                            logFirebaseEvent(
-                                                '_refresh_database_request');
-                                            setState(() => _model
-                                                .listViewPagingController
-                                                ?.refresh());
-                                            await _model
-                                                .waitForOnePageForListView();
-                                          },
-                                        ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Align(
+                  alignment: const AlignmentDirectional(0.00, 0.00),
+                  child: Container(
+                    width: MediaQuery.sizeOf(context).width * 1.0,
+                    height: 40.0,
+                    decoration: const BoxDecoration(),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              4.0, 0.0, 0.0, 0.0),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              logFirebaseEvent(
+                                  'FEED_PAGE_Text_orzrsool_ON_TAP');
+                              logFirebaseEvent('Text_bottom_sheet');
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                enableDrag: false,
+                                context: context,
+                                builder: (context) {
+                                  return GestureDetector(
+                                    onTap: () => _model
+                                            .unfocusNode.canRequestFocus
+                                        ? FocusScope.of(context)
+                                            .requestFocus(_model.unfocusNode)
+                                        : FocusScope.of(context).unfocus(),
+                                    child: Padding(
+                                      padding: MediaQuery.viewInsetsOf(context),
+                                      child: SearchAndFilterBottomSheetWidget(
+                                        searchCallback: () async {
+                                          logFirebaseEvent(
+                                              '_refresh_database_request');
+                                          setState(() => _model
+                                              .listViewPagingController
+                                              ?.refresh());
+                                          await _model
+                                              .waitForOnePageForListView();
+                                        },
                                       ),
-                                    );
-                                  },
-                                ).then((value) => safeSetState(() {}));
-                              },
-                              child: Text(
-                                'Filter',
-                                style: FlutterFlowTheme.of(context).bodyMedium,
-                              ),
+                                    ),
+                                  );
+                                },
+                              ).then((value) => safeSetState(() {}));
+                            },
+                            child: Text(
+                              'Filter',
+                              style: FlutterFlowTheme.of(context).bodyMedium,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                4.0, 0.0, 8.0, 0.0),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                logFirebaseEvent(
-                                    'FEED_PAGE_Icon_0uyughha_ON_TAP');
-                                logFirebaseEvent('Icon_bottom_sheet');
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  enableDrag: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return GestureDetector(
-                                      onTap: () => _model
-                                              .unfocusNode.canRequestFocus
-                                          ? FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode)
-                                          : FocusScope.of(context).unfocus(),
-                                      child: Padding(
-                                        padding:
-                                            MediaQuery.viewInsetsOf(context),
-                                        child: SearchAndFilterBottomSheetWidget(
-                                          searchCallback: () async {
-                                            logFirebaseEvent(
-                                                '_refresh_database_request');
-                                            setState(() => _model
-                                                .listViewPagingController
-                                                ?.refresh());
-                                            await _model
-                                                .waitForOnePageForListView();
-                                          },
-                                        ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              4.0, 0.0, 8.0, 0.0),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              logFirebaseEvent(
+                                  'FEED_PAGE_Icon_0uyughha_ON_TAP');
+                              logFirebaseEvent('Icon_bottom_sheet');
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                enableDrag: false,
+                                context: context,
+                                builder: (context) {
+                                  return GestureDetector(
+                                    onTap: () => _model
+                                            .unfocusNode.canRequestFocus
+                                        ? FocusScope.of(context)
+                                            .requestFocus(_model.unfocusNode)
+                                        : FocusScope.of(context).unfocus(),
+                                    child: Padding(
+                                      padding: MediaQuery.viewInsetsOf(context),
+                                      child: SearchAndFilterBottomSheetWidget(
+                                        searchCallback: () async {
+                                          logFirebaseEvent(
+                                              '_refresh_database_request');
+                                          setState(() => _model
+                                              .listViewPagingController
+                                              ?.refresh());
+                                          await _model
+                                              .waitForOnePageForListView();
+                                        },
                                       ),
-                                    );
-                                  },
-                                ).then((value) => safeSetState(() {}));
-                              },
-                              child: Icon(
-                                Icons.filter_list,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                size: 24.0,
-                              ),
+                                    ),
+                                  );
+                                },
+                              ).then((value) => safeSetState(() {}));
+                            },
+                            child: Icon(
+                              Icons.filter_list,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 24.0,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  Container(
+                ),
+                Expanded(
+                  child: Container(
                     width: MediaQuery.sizeOf(context).width * 1.0,
-                    height: MediaQuery.sizeOf(context).height * 0.8,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).primaryBackground,
                     ),
@@ -252,15 +274,16 @@ class _FeedWidgetState extends State<FeedWidget> {
                             searchBreed: FFAppState().searchBreed,
                             searchDogs: FFAppState().searchDogs,
                             searchCats: FFAppState().searchCats,
-                            next: nextPageMarker.nextPageNumber,
                             last: getJsonField(
                               (nextPageMarker.lastResponse ??
                                       const ApiCallResponse({}, {}, 200))
                                   .jsonBody,
                               r'''$.last''',
                             ).toString(),
-                            loadedItems: nextPageMarker.numItems,
-                            page: nextPageMarker.nextPageNumber,
+                            includeDeleted: false,
+                            userLocationList:
+                                functions.splitLatLng(currentUserLocationValue),
+                            searchDistance: FFAppState().searchDistance,
                           ),
                         ),
                         padding: EdgeInsets.zero,
@@ -353,13 +376,8 @@ class _FeedWidgetState extends State<FeedWidget> {
                       ),
                     ),
                   ),
-                  wrapWithModel(
-                    model: _model.customNavBarModel,
-                    updateCallback: () => setState(() {}),
-                    child: const CustomNavBarWidget(),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
