@@ -1,13 +1,7 @@
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/widgets/custom_nav_bar/custom_nav_bar_widget.dart';
 import 'shelters_widget.dart' show SheltersWidget;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class SheltersModel extends FlutterFlowModel<SheltersWidget> {
   ///  State fields for stateful widgets in this page.
@@ -22,10 +16,12 @@ class SheltersModel extends FlutterFlowModel<SheltersWidget> {
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {
     customNavBarModel = createModel(context, () => CustomNavBarModel());
   }
 
+  @override
   void dispose() {
     unfocusNode.dispose();
     textFieldFocusNode?.dispose();

@@ -1,18 +1,14 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/widgets/custom_nav_bar/custom_nav_bar_widget.dart';
 import '/widgets/feed/empty_search_results_message/empty_search_results_message_widget.dart';
 import '/widgets/feed/feed_card/feed_card_widget.dart';
 import '/widgets/feed/search_and_filter_bottom_sheet/search_and_filter_bottom_sheet_widget.dart';
-import '/backend/schema/structs/index.dart';
 import '/flutter_flow/permissions_util.dart';
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'feed_model.dart';
@@ -20,10 +16,9 @@ export 'feed_model.dart';
 
 class FeedWidget extends StatefulWidget {
   const FeedWidget({
-    Key? key,
+    super.key,
     String? species,
-  })  : this.species = species ?? 'cat',
-        super(key: key);
+  })  : species = species ?? 'cat';
 
   final String species;
 
@@ -47,7 +42,7 @@ class _FeedWidgetState extends State<FeedWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('FEED_PAGE_Feed_ON_INIT_STATE');
       currentUserLocationValue =
-          await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
+          await getCurrentUserLocation(defaultLocation: const LatLng(0.0, 0.0));
       logFirebaseEvent('Feed_request_permissions');
       await requestPermission(locationPermission);
       logFirebaseEvent('Feed_update_app_state');
@@ -63,7 +58,7 @@ class _FeedWidgetState extends State<FeedWidget> {
               color: FlutterFlowTheme.of(context).primaryText,
             ),
           ),
-          duration: Duration(milliseconds: 4000),
+          duration: const Duration(milliseconds: 4000),
           backgroundColor: FlutterFlowTheme.of(context).secondary,
         ),
       );
@@ -110,30 +105,30 @@ class _FeedWidgetState extends State<FeedWidget> {
                   fontSize: 22.0,
                 ),
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Align(
-                    alignment: AlignmentDirectional(0.00, 0.00),
+                    alignment: const AlignmentDirectional(0.00, 0.00),
                     child: Container(
                       width: MediaQuery.sizeOf(context).width * 1.0,
                       height: 40.0,
-                      decoration: BoxDecoration(),
+                      decoration: const BoxDecoration(),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 4.0, 0.0, 0.0, 0.0),
                             child: InkWell(
                               splashColor: Colors.transparent,
@@ -182,7 +177,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 4.0, 0.0, 8.0, 0.0),
                             child: InkWell(
                               splashColor: Colors.transparent,
@@ -260,7 +255,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                             next: nextPageMarker.nextPageNumber,
                             last: getJsonField(
                               (nextPageMarker.lastResponse ??
-                                      ApiCallResponse({}, {}, 200))
+                                      const ApiCallResponse({}, {}, 200))
                                   .jsonBody,
                               r'''$.last''',
                             ).toString(),
@@ -276,7 +271,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                           // Customize what your widget looks like when it's loading the first page.
                           firstPageProgressIndicatorBuilder: (_) => Center(
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 48.0, 0.0, 0.0),
                               child: SizedBox(
                                 width: 50.0,
@@ -292,7 +287,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                           // Customize what your widget looks like when it's loading another page.
                           newPageProgressIndicatorBuilder: (_) => Center(
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 48.0, 0.0, 0.0),
                               child: SizedBox(
                                 width: 50.0,
@@ -332,7 +327,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                                       ),
                                       Align(
                                         alignment:
-                                            AlignmentDirectional(0.00, 0.00),
+                                            const AlignmentDirectional(0.00, 0.00),
                                         child: wrapWithModel(
                                           model: _model.feedCardModels.getModel(
                                             feedListChildrenItem.animalID,
@@ -361,7 +356,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                   wrapWithModel(
                     model: _model.customNavBarModel,
                     updateCallback: () => setState(() {}),
-                    child: CustomNavBarWidget(),
+                    child: const CustomNavBarWidget(),
                   ),
                 ],
               ),

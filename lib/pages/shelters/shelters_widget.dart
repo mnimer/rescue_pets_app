@@ -1,17 +1,15 @@
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/widgets/custom_nav_bar/custom_nav_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'shelters_model.dart';
 export 'shelters_model.dart';
 
 class SheltersWidget extends StatefulWidget {
-  const SheltersWidget({Key? key}) : super(key: key);
+  const SheltersWidget({super.key});
 
   @override
   _SheltersWidgetState createState() => _SheltersWidgetState();
@@ -67,7 +65,7 @@ class _SheltersWidgetState extends State<SheltersWidget> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   height: 300.0,
                   child: Stack(
@@ -79,9 +77,9 @@ class _SheltersWidgetState extends State<SheltersWidget> {
                         fit: BoxFit.cover,
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-1.00, -1.00),
+                        alignment: const AlignmentDirectional(-1.00, -1.00),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               16.0, 16.0, 0.0, 0.0),
                           child: FlutterFlowIconButton(
                             borderRadius: 30.0,
@@ -110,13 +108,13 @@ class _SheltersWidgetState extends State<SheltersWidget> {
                   ),
                   child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+                        const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 16.0, 0.0),
                           child: Text(
                             'Businesses',
@@ -130,7 +128,7 @@ class _SheltersWidgetState extends State<SheltersWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 16.0, 0.0),
                           child: Container(
                             width: double.infinity,
@@ -140,9 +138,9 @@ class _SheltersWidgetState extends State<SheltersWidget> {
                                   .secondaryBackground,
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            alignment: AlignmentDirectional(0.00, 0.00),
+                            alignment: const AlignmentDirectional(0.00, 0.00),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   12.0, 12.0, 12.0, 12.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -155,7 +153,7 @@ class _SheltersWidgetState extends State<SheltersWidget> {
                                   ),
                                   Expanded(
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 8.0),
                                       child: TextFormField(
                                         controller: _model.textController,
@@ -185,13 +183,13 @@ class _SheltersWidgetState extends State<SheltersWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               16.0, 0.0, 16.0, 0.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 8.0, 0.0),
                                 child: Container(
                                   width: double.infinity,
@@ -207,14 +205,14 @@ class _SheltersWidgetState extends State<SheltersWidget> {
                                     ),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
                                         12.0, 16.0, 12.0, 16.0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 8.0, 0.0),
                                           child: ClipRRect(
                                             borderRadius:
@@ -230,7 +228,7 @@ class _SheltersWidgetState extends State<SheltersWidget> {
                                         Expanded(
                                           child: Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 12.0),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
@@ -253,7 +251,7 @@ class _SheltersWidgetState extends State<SheltersWidget> {
                                                       ),
                                                 ),
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
+                                                  padding: const EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 4.0, 0.0, 0.0),
                                                   child: Text(
@@ -270,7 +268,7 @@ class _SheltersWidgetState extends State<SheltersWidget> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
+                                                  padding: const EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 4.0, 0.0, 0.0),
                                                   child: Text(
@@ -296,7 +294,7 @@ class _SheltersWidgetState extends State<SheltersWidget> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 8.0, 0.0),
                                 child: Container(
                                   width: double.infinity,
@@ -312,14 +310,14 @@ class _SheltersWidgetState extends State<SheltersWidget> {
                                     ),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
                                         12.0, 16.0, 12.0, 16.0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 8.0, 0.0),
                                           child: ClipRRect(
                                             borderRadius:
@@ -335,7 +333,7 @@ class _SheltersWidgetState extends State<SheltersWidget> {
                                         Expanded(
                                           child: Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 12.0),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
@@ -358,7 +356,7 @@ class _SheltersWidgetState extends State<SheltersWidget> {
                                                       ),
                                                 ),
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
+                                                  padding: const EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 4.0, 0.0, 0.0),
                                                   child: Text(
@@ -375,7 +373,7 @@ class _SheltersWidgetState extends State<SheltersWidget> {
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: EdgeInsetsDirectional
+                                                  padding: const EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 4.0, 0.0, 0.0),
                                                   child: Text(
@@ -403,17 +401,17 @@ class _SheltersWidgetState extends State<SheltersWidget> {
                             ],
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                       ],
                     ),
                   ),
                 ),
                 Align(
-                  alignment: AlignmentDirectional(0.00, 1.00),
+                  alignment: const AlignmentDirectional(0.00, 1.00),
                   child: wrapWithModel(
                     model: _model.customNavBarModel,
                     updateCallback: () => setState(() {}),
-                    child: CustomNavBarWidget(),
+                    child: const CustomNavBarWidget(),
                   ),
                 ),
               ],

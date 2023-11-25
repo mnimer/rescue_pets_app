@@ -1,12 +1,6 @@
-import '/backend/schema/structs/index.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'web_share_sheet_widget.dart' show WebShareSheetWidget;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class WebShareSheetModel extends FlutterFlowModel<WebShareSheetWidget> {
   ///  State fields for stateful widgets in this component.
@@ -18,8 +12,10 @@ class WebShareSheetModel extends FlutterFlowModel<WebShareSheetWidget> {
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {}
 
+  @override
   void dispose() {
     textFieldFocusNode?.dispose();
     textController?.dispose();

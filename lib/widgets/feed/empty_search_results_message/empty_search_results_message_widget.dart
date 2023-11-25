@@ -1,17 +1,15 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'empty_search_results_message_model.dart';
 export 'empty_search_results_message_model.dart';
 
 class EmptySearchResultsMessageWidget extends StatefulWidget {
   const EmptySearchResultsMessageWidget({
-    Key? key,
+    super.key,
     required this.species,
-  }) : super(key: key);
+  });
 
   final String? species;
 
@@ -60,7 +58,7 @@ class _EmptySearchResultsMessageWidgetState
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Align(
-            alignment: AlignmentDirectional(0.00, 0.00),
+            alignment: const AlignmentDirectional(0.00, 0.00),
             child: Text(
               'No pets were found matching your search.',
               textAlign: TextAlign.center,

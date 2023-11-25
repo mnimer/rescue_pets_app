@@ -1,5 +1,4 @@
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -7,11 +6,7 @@ import '/widgets/feed/login_and_signup_sheet/login_and_signup_sheet_widget.dart'
 import '/widgets/feed/web_share_sheet/web_share_sheet_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'feed_card_model.dart';
@@ -19,9 +14,9 @@ export 'feed_card_model.dart';
 
 class FeedCardWidget extends StatefulWidget {
   const FeedCardWidget({
-    Key? key,
+    super.key,
     required this.pet,
-  }) : super(key: key);
+  });
 
   final PetsStruct? pet;
 
@@ -73,7 +68,7 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
         color: FlutterFlowTheme.of(context).secondaryBackground,
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
+        padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,14 +79,14 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Align(
-                  alignment: AlignmentDirectional(0.00, 0.00),
+                  alignment: const AlignmentDirectional(0.00, 0.00),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 6.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 6.0, 0.0),
                     child: Container(
                       width: 45.0,
                       height: 45.0,
                       clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                       ),
                       child: Image.network(
@@ -155,9 +150,9 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
               ],
             ),
             Align(
-              alignment: AlignmentDirectional(0.00, 0.00),
+              alignment: const AlignmentDirectional(0.00, 0.00),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 16.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 16.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -169,8 +164,8 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                             return Builder(
                               builder: (context) {
                                 final petImageCarousel =
-                                    widget.pet?.pictures?.toList() ?? [];
-                                return Container(
+                                    widget.pet?.pictures.toList() ?? [];
+                                return SizedBox(
                                   width: double.infinity,
                                   height: () {
                                     if (MediaQuery.sizeOf(context).width <
@@ -212,9 +207,9 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                                               child:
                                                   FlutterFlowExpandedImageView(
                                                 image: CachedNetworkImage(
-                                                  fadeInDuration: Duration(
+                                                  fadeInDuration: const Duration(
                                                       milliseconds: 500),
-                                                  fadeOutDuration: Duration(
+                                                  fadeOutDuration: const Duration(
                                                       milliseconds: 500),
                                                   imageUrl: petImageCarouselItem
                                                       .originalUrlCdnLink,
@@ -237,9 +232,9 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                                                 BorderRadius.circular(8.0),
                                             child: CachedNetworkImage(
                                               fadeInDuration:
-                                                  Duration(milliseconds: 500),
+                                                  const Duration(milliseconds: 500),
                                               fadeOutDuration:
-                                                  Duration(milliseconds: 500),
+                                                  const Duration(milliseconds: 500),
                                               imageUrl: petImageCarouselItem
                                                   .originalUrlCdnLink,
                                               width: 300.0,
@@ -329,14 +324,14 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
               style: FlutterFlowTheme.of(context).bodyMedium,
             )),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     valueOrDefault<String>(
-                      widget.pet?.likes?.toString(),
+                      widget.pet?.likes.toString(),
                       '0',
                     ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -413,7 +408,7 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                       ),
                       Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
                         child: Text(
                           'Share',
                           style:
@@ -459,7 +454,7 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                                         .primaryText,
                                   ),
                                 ),
-                                duration: Duration(milliseconds: 4000),
+                                duration: const Duration(milliseconds: 4000),
                                 backgroundColor:
                                     FlutterFlowTheme.of(context).secondary,
                               ),
@@ -476,7 +471,7 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                               builder: (context) {
                                 return Padding(
                                   padding: MediaQuery.viewInsetsOf(context),
-                                  child: LoginAndSignupSheetWidget(),
+                                  child: const LoginAndSignupSheetWidget(),
                                 );
                               },
                             ).then((value) => safeSetState(() {}));
@@ -492,7 +487,7 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                       ),
                       Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
                         child: Text(
                           'Favorite',
                           style:
@@ -516,7 +511,7 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                       ),
                       Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
                         child: Text(
                           'Adopt',
                           style:

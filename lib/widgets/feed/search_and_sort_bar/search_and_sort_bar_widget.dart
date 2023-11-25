@@ -3,18 +3,16 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/widgets/feed/search_and_filter_bottom_sheet/search_and_filter_bottom_sheet_widget.dart';
 import '/widgets/feed/sort_menu/sort_menu_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'search_and_sort_bar_model.dart';
 export 'search_and_sort_bar_model.dart';
 
 class SearchAndSortBarWidget extends StatefulWidget {
   const SearchAndSortBarWidget({
-    Key? key,
+    super.key,
     required this.searchCallback,
-  }) : super(key: key);
+  });
 
   final Future<dynamic> Function()? searchCallback;
 
@@ -57,9 +55,9 @@ class _SearchAndSortBarWidgetState extends State<SearchAndSortBarWidget> {
         color: FlutterFlowTheme.of(context).secondaryBackground,
       ),
       child: Align(
-        alignment: AlignmentDirectional(0.00, 0.00),
+        alignment: const AlignmentDirectional(0.00, 0.00),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+          padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,7 +82,7 @@ class _SearchAndSortBarWidgetState extends State<SearchAndSortBarWidget> {
                         builder: (context) {
                           return Padding(
                             padding: MediaQuery.viewInsetsOf(context),
-                            child: Container(
+                            child: SizedBox(
                               height: 310.0,
                               child: SearchAndFilterBottomSheetWidget(
                                 searchCallback: () async {
@@ -98,7 +96,7 @@ class _SearchAndSortBarWidgetState extends State<SearchAndSortBarWidget> {
                                               .primaryText,
                                         ),
                                       ),
-                                      duration: Duration(milliseconds: 4000),
+                                      duration: const Duration(milliseconds: 4000),
                                       backgroundColor:
                                           FlutterFlowTheme.of(context)
                                               .secondary,
@@ -118,7 +116,7 @@ class _SearchAndSortBarWidgetState extends State<SearchAndSortBarWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                     child: InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
@@ -136,7 +134,7 @@ class _SearchAndSortBarWidgetState extends State<SearchAndSortBarWidget> {
                           builder: (context) {
                             return Padding(
                               padding: MediaQuery.viewInsetsOf(context),
-                              child: Container(
+                              child: SizedBox(
                                 height: 310.0,
                                 child: SearchAndFilterBottomSheetWidget(
                                   searchCallback: () async {
@@ -150,7 +148,7 @@ class _SearchAndSortBarWidgetState extends State<SearchAndSortBarWidget> {
                                                 .primaryText,
                                           ),
                                         ),
-                                        duration: Duration(milliseconds: 4000),
+                                        duration: const Duration(milliseconds: 4000),
                                         backgroundColor:
                                             FlutterFlowTheme.of(context)
                                                 .secondary,
@@ -175,10 +173,10 @@ class _SearchAndSortBarWidgetState extends State<SearchAndSortBarWidget> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Align(
-                    alignment: AlignmentDirectional(1.00, 0.00),
+                    alignment: const AlignmentDirectional(1.00, 0.00),
                     child: Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
                       child: InkWell(
                         splashColor: Colors.transparent,
                         focusColor: Colors.transparent,
@@ -196,7 +194,7 @@ class _SearchAndSortBarWidgetState extends State<SearchAndSortBarWidget> {
                             builder: (context) {
                               return Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
-                                child: Container(
+                                child: const SizedBox(
                                   height: 200.0,
                                   child: SortMenuWidget(),
                                 ),
@@ -228,7 +226,7 @@ class _SearchAndSortBarWidgetState extends State<SearchAndSortBarWidget> {
                         builder: (context) {
                           return Padding(
                             padding: MediaQuery.viewInsetsOf(context),
-                            child: Container(
+                            child: const SizedBox(
                               height: 200.0,
                               child: SortMenuWidget(),
                             ),

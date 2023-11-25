@@ -1,21 +1,12 @@
 import '/backend/api_requests/api_calls.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/widgets/custom_nav_bar/custom_nav_bar_widget.dart';
-import '/widgets/feed/empty_search_results_message/empty_search_results_message_widget.dart';
 import '/widgets/feed/feed_card/feed_card_widget.dart';
-import '/widgets/feed/search_and_filter_bottom_sheet/search_and_filter_bottom_sheet_widget.dart';
 import '/backend/schema/structs/index.dart';
-import '/flutter_flow/permissions_util.dart';
 import 'dart:async';
 import 'feed_widget.dart' show FeedWidget;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:provider/provider.dart';
 
 class FeedModel extends FlutterFlowModel<FeedWidget> {
   ///  Local state fields for this page.
@@ -39,11 +30,13 @@ class FeedModel extends FlutterFlowModel<FeedWidget> {
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {
     feedCardModels = FlutterFlowDynamicModels(() => FeedCardModel());
     customNavBarModel = createModel(context, () => CustomNavBarModel());
   }
 
+  @override
   void dispose() {
     unfocusNode.dispose();
     listViewPagingController?.dispose();
@@ -61,7 +54,7 @@ class FeedModel extends FlutterFlowModel<FeedWidget> {
   }) async {
     final stopwatch = Stopwatch()..start();
     while (true) {
-      await Future.delayed(Duration(milliseconds: 50));
+      await Future.delayed(const Duration(milliseconds: 50));
       final timeElapsed = stopwatch.elapsedMilliseconds;
       final requestComplete =
           (listViewPagingController?.nextPageKey?.nextPageNumber ?? 0) > 0;
@@ -96,11 +89,11 @@ class FeedModel extends FlutterFlowModel<FeedWidget> {
         final pageItems =
             (PetListStruct.fromMap(listViewPetSearchResponse.jsonBody).pets ??
                     [])
-                .toList() as List;
+                .toList();
         final newNumItems = nextPageMarker.numItems + pageItems.length;
         listViewPagingController?.appendPage(
           pageItems,
-          (pageItems.length > 0)
+          (pageItems.isNotEmpty)
               ? ApiPagingParams(
                   nextPageNumber: nextPageMarker.nextPageNumber + 1,
                   numItems: newNumItems,

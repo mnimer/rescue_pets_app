@@ -6,17 +6,15 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'search_and_filter_bottom_sheet_model.dart';
 export 'search_and_filter_bottom_sheet_model.dart';
 
 class SearchAndFilterBottomSheetWidget extends StatefulWidget {
   const SearchAndFilterBottomSheetWidget({
-    Key? key,
+    super.key,
     this.searchCallback,
-  }) : super(key: key);
+  });
 
   final Future<dynamic> Function()? searchCallback;
 
@@ -63,14 +61,14 @@ class _SearchAndFilterBottomSheetWidgetState
       height: 300.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             blurRadius: 7.0,
             color: Color(0x33000000),
             offset: Offset(0.0, -2.0),
           )
         ],
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(0.0),
           bottomRight: Radius.circular(0.0),
           topLeft: Radius.circular(16.0),
@@ -78,21 +76,21 @@ class _SearchAndFilterBottomSheetWidgetState
         ),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+        padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
               child: Text(
                 'Search & Filter pets',
                 style: FlutterFlowTheme.of(context).headlineSmall,
               ),
             ),
             Align(
-              alignment: AlignmentDirectional(0.00, 0.00),
+              alignment: const AlignmentDirectional(0.00, 0.00),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -112,7 +110,7 @@ class _SearchAndFilterBottomSheetWidgetState
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     8.0, 0.0, 8.0, 0.0),
                                 child: Autocomplete<String>(
                                   initialValue: TextEditingValue(
@@ -142,7 +140,7 @@ class _SearchAndFilterBottomSheetWidgetState
                                       onSelected: onSelected,
                                       textStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium,
-                                      textHighlightStyle: TextStyle(),
+                                      textHighlightStyle: const TextStyle(),
                                       elevation: 4.0,
                                       optionBackgroundColor:
                                           FlutterFlowTheme.of(context)
@@ -191,7 +189,7 @@ class _SearchAndFilterBottomSheetWidgetState
                                                 ),
                                               ),
                                               duration:
-                                                  Duration(milliseconds: 1000),
+                                                  const Duration(milliseconds: 1000),
                                               backgroundColor:
                                                   FlutterFlowTheme.of(context)
                                                       .secondary,
@@ -212,7 +210,7 @@ class _SearchAndFilterBottomSheetWidgetState
                                       onEditingComplete: onEditingComplete,
                                       onChanged: (_) => EasyDebounce.debounce(
                                         '_model.textController',
-                                        Duration(milliseconds: 2000),
+                                        const Duration(milliseconds: 2000),
                                         () => setState(() {}),
                                       ),
                                       obscureText: false,
@@ -259,7 +257,7 @@ class _SearchAndFilterBottomSheetWidgetState
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                         ),
-                                        prefixIcon: Icon(
+                                        prefixIcon: const Icon(
                                           Icons.search,
                                         ),
                                         suffixIcon: _model
@@ -270,7 +268,7 @@ class _SearchAndFilterBottomSheetWidgetState
                                                       ?.clear();
                                                   setState(() {});
                                                 },
-                                                child: Icon(
+                                                child: const Icon(
                                                   Icons.clear,
                                                   size: 16.0,
                                                 ),
@@ -312,7 +310,7 @@ class _SearchAndFilterBottomSheetWidgetState
                                   ),
                                   options: List<int>.from(
                                       [5, 25, 50, 100, 250, 500, -1]),
-                                  optionLabels: [
+                                  optionLabels: const [
                                     '5 miles',
                                     '25 miles',
                                     '50 miles',
@@ -351,7 +349,7 @@ class _SearchAndFilterBottomSheetWidgetState
                                       FlutterFlowTheme.of(context).alternate,
                                   borderWidth: 2.0,
                                   borderRadius: 8.0,
-                                  margin: EdgeInsetsDirectional.fromSTEB(
+                                  margin: const EdgeInsetsDirectional.fromSTEB(
                                       16.0, 4.0, 16.0, 4.0),
                                   hidesUnderline: true,
                                   isSearchable: false,
@@ -361,7 +359,7 @@ class _SearchAndFilterBottomSheetWidgetState
                             ),
                           ],
                         ),
-                      ].divide(SizedBox(height: 16.0)),
+                      ].divide(const SizedBox(height: 16.0)),
                     ),
                   ),
                   Container(
@@ -381,13 +379,13 @@ class _SearchAndFilterBottomSheetWidgetState
                               style: FlutterFlowTheme.of(context).bodyMedium,
                             ),
                             Switch.adaptive(
-                              key: ValueKey('Dogs'),
+                              key: const ValueKey('Dogs'),
                               value: _model.dogSwitchValue ??=
                                   FFAppState().searchDogs,
                               onChanged: (newValue) async {
                                 setState(
-                                    () => _model.dogSwitchValue = newValue!);
-                                if (newValue!) {
+                                    () => _model.dogSwitchValue = newValue);
+                                if (newValue) {
                                   logFirebaseEvent(
                                       'SEARCH_AND_FILTER_BOTTOM_SHEET_dogSwitch');
                                   // Action 1.
@@ -442,13 +440,13 @@ class _SearchAndFilterBottomSheetWidgetState
                               style: FlutterFlowTheme.of(context).bodyMedium,
                             ),
                             Switch.adaptive(
-                              key: ValueKey('Cats'),
+                              key: const ValueKey('Cats'),
                               value: _model.catSwitchValue ??=
                                   FFAppState().searchCats,
                               onChanged: (newValue) async {
                                 setState(
-                                    () => _model.catSwitchValue = newValue!);
-                                if (newValue!) {
+                                    () => _model.catSwitchValue = newValue);
+                                if (newValue) {
                                   logFirebaseEvent(
                                       'SEARCH_AND_FILTER_BOTTOM_SHEET_catSwitch');
                                   logFirebaseEvent(
@@ -494,17 +492,17 @@ class _SearchAndFilterBottomSheetWidgetState
                             ),
                           ],
                         ),
-                      ].divide(SizedBox(height: 8.0)),
+                      ].divide(const SizedBox(height: 8.0)),
                     ),
                   ),
-                ].divide(SizedBox(width: 16.0)),
+                ].divide(const SizedBox(width: 16.0)),
               ),
             ),
             Flexible(
               child: Align(
-                alignment: AlignmentDirectional(0.00, 0.00),
+                alignment: const AlignmentDirectional(0.00, 0.00),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       logFirebaseEvent(
@@ -517,9 +515,9 @@ class _SearchAndFilterBottomSheetWidgetState
                       width: double.infinity,
                       height: 50.0,
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -527,7 +525,7 @@ class _SearchAndFilterBottomSheetWidgetState
                                 color: Colors.white,
                               ),
                       elevation: 2.0,
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.transparent,
                         width: 1.0,
                       ),

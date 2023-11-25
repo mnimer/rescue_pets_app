@@ -2,15 +2,13 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'custom_nav_bar_model.dart';
 export 'custom_nav_bar_model.dart';
 
 class CustomNavBarWidget extends StatefulWidget {
-  const CustomNavBarWidget({Key? key}) : super(key: key);
+  const CustomNavBarWidget({super.key});
 
   @override
   _CustomNavBarWidgetState createState() => _CustomNavBarWidgetState();
@@ -45,7 +43,7 @@ class _CustomNavBarWidgetState extends State<CustomNavBarWidget> {
     context.watch<FFAppState>();
 
     return Align(
-      alignment: AlignmentDirectional(0.00, 1.00),
+      alignment: const AlignmentDirectional(0.00, 1.00),
       child: Container(
         width: MediaQuery.sizeOf(context).width * 1.0,
         height: 64.0,
